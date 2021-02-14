@@ -1,4 +1,4 @@
-<x-jet-form-section submit="storeUser" class="p-6">
+<x-jet-form-section submit="storePersona" class="p-6">
     <x-slot name="title">
         {{ __('Crear Persona') }}
     </x-slot>
@@ -14,13 +14,13 @@
             <x-jet-input-error for="nro_documento" class="mt-2" />
         </div>
         <div class="col-span-6 sm:col-span-6">
-            <x-jet-label value="{{ __('Nombres') }}" />
-            <x-jet-input type="text" class="mt-1 block w-full" wire:model.defer="name" autocomplete="on" />
-            <x-jet-input-error for="name" class="mt-2" />
+            <x-jet-label for="nombres" value="{{ __('Nombres') }}" />
+            <x-jet-input type="text" id="nombres" class="mt-1 block w-full" wire:model.defer="nombres" autocomplete="on" />
+            <x-jet-input-error for="nombres" class="mt-2" />
         </div>
         <div class="col-span-6 sm:col-span-3">
             <x-jet-label value="{{ __('Apellido Paterno') }}" />
-            <x-jet-input type="email" class="mt-1 block w-full" wire:model.defer="apellido_paterno" autocomplete="on" />
+            <x-jet-input type="text" class="mt-1 block w-full" wire:model.defer="apellido_paterno" autocomplete="on" />
             <x-jet-input-error for="apellido_paterno" class="mt-2" />
         </div>
         <div class="col-span-6 sm:col-span-3">
@@ -94,15 +94,14 @@
                 <div class="grid grid-cols-6 gap-6" wire:key="parentesco-{{ $key }}">
                     <div class="col-span-6 sm:col-span-2" >
                         <x-jet-label value="{{ __('Persona') }}" />
-                        <select wire:model.defer="persona.{{ $item }}.parentesco" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                        <select required wire:model.defer="parentesco.{{ $item }}.user" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
                             <option value="">Seleccione...</option>
-                            
+                            <option value="1">Franco</option>
                         </select>
-                        <x-jet-input-error for="persona_id" class="mt-2" />
                     </div>
                     <div class="col-span-6 sm:col-span-2">
                         <x-jet-label value="{{ __('Parentesco') }}" />
-                        <select wire:model.defer="parentesco.{{ $item }}.parentesco" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                        <select required wire:model.defer="parentesco.{{ $item }}.parentesco" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
                             <option value="">Seleccione...</option>
                             <option value="Conyugue o Pareja">Conyugue o Pareja</option>
                             <option value="Hijo de ambos">Hijo de ambos</option>
@@ -113,7 +112,6 @@
                             <option value="Cuñado o Cuñada">Cuñado o Cuñada</option>
                             <option value="Otro">Otro</option>
                         </select>
-                        <x-jet-input-error for="parentesco" class="mt-2" />
                     </div>
                     <div class="col-span-6 sm:col-span-2">
                         <x-jet-label value="{{ __('Eliminar') }}" />
@@ -122,6 +120,7 @@
                 </div>
                 <hr class="col-span-5 sm:col-span-5 mt-2 mb-2">
             @endforeach
+            <x-jet-input-error for="parentesco" class="mt-2" />
         </div>
         <div class="col-span-6 sm:col-span-6">
             <button  wire:click="addParentesco"  type="button" class="block text-center w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-7">
@@ -193,20 +192,6 @@
                 Agregar Anexo
             </button>
         </div>
-        {{-- <div class="col-span-6 sm:col-span-6">
-            <label class="flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-blue-700 w-full">
-                <svg class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                    <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
-                </svg>
-                <span class="mt-2 text-base leading-normal">Selecciona tu firma</span>
-                <input type='file' wire:model="firma" class="hidden" />
-                @if ($firma)
-                    Foto:
-                    <img class="h-32 w-32 mb-6" src="{{ $firma->temporaryUrl() }}">
-                @endif
-            </label>
-            <x-jet-input-error for="firma" class="mt-2" />
-        </div> --}}
     </x-slot>
 
     <x-slot name="actions">

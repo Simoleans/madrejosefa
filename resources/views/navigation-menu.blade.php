@@ -17,11 +17,6 @@
                     </x-jet-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('usuarios.index') }}" :active="request()->routeIs('usuarios.*')">
-                        {{ __('Usuarios') }}
-                    </x-jet-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('personas.crear') }}" :active="request()->routeIs('personas.*')">
                         {{ __('Personas') }}
                     </x-jet-nav-link>
@@ -128,6 +123,20 @@
 
                             <x-jet-dropdown-link href="{{ route('configuracion') }}">
                                 {{ __('Configuración') }}
+                            </x-jet-dropdown-link>
+
+                            <div class="border-t border-gray-100"></div>
+
+                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                {{ __('Usuarios') }}
+                            </div>
+
+                            <x-jet-dropdown-link href="{{ route('usuarios.index') }}">
+                                {{ __('Ver Usuarios') }}
+                            </x-jet-dropdown-link>
+
+                            <x-jet-dropdown-link href="{{ route('usuarios.crear') }}">
+                                {{ __('Crear Usuario') }}
                             </x-jet-dropdown-link>
 
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
