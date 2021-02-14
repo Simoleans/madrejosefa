@@ -4,7 +4,8 @@
     </x-slot>
 
     <x-slot name="description">
-        {{ __('Debe llenar todos los datos.') }}
+        {{ __('Debe llenar todos los datos.') }}<br>
+        <a class="inline-flex items-center px-2 py-2 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150 mb-2 bg-yellow-600 hover:bg-yellow-700" href="{{ route('personas.index') }}">Volver</a>
     </x-slot>
 
     <x-slot name="form">

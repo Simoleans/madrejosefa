@@ -17,7 +17,7 @@
                     </x-jet-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('personas.crear') }}" :active="request()->routeIs('personas.*')">
+                    <x-jet-nav-link href="{{ route('personas.index') }}" :active="request()->routeIs('personas.*')">
                         {{ __('Personas') }}
                     </x-jet-nav-link>
                 </div>

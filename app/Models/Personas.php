@@ -21,4 +21,9 @@ class Personas extends Model
     'nro_documento',
     'status'
     ];
+
+    public function getFullNameAttribute()
+{
+    return "{$this->nombres} {$this->apellido_paterno} {$this->apellido_materno}";
+}
 }

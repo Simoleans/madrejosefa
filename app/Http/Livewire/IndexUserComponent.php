@@ -21,7 +21,7 @@ class IndexUserComponent extends Component
 
     public function render()
     {
-        return view('livewire.index-user-component',['users' => User::where('name','LIKE',"%{$this->search}%")->orderby('id','DESC')->paginate(6)]);
+        return view('livewire.index-user-component',['users' => User::where('name','LIKE',"%{$this->search}%")->orderby('id','DESC')->paginate(8)]);
     }
 
     public function modalEditar($id)
