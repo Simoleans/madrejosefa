@@ -88,42 +88,109 @@
             </select>
             <x-jet-input-error for="pais_origen" class="mt-2" />
         </div>
+        <hr class="col-span-6 sm:col-span-6">
         <div class="col-span-6">
             @foreach ($arrayParentesco as $item => $key)
-        <div class="grid grid-cols-6 gap-6" wire:key="parentesco-{{ $key }}">
-            <div class="col-span-6 sm:col-span-2" >
-                <x-jet-label value="{{ __('Persona') }}" />
-                <select wire:model.defer="persona.{{ $item }}.parentesco" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                    <option value="">Seleccione...</option>
-                    
-                </select>
-                <x-jet-input-error for="persona_id" class="mt-2" />
-            </div>
-            <div class="col-span-6 sm:col-span-2">
-                <x-jet-label value="{{ __('Parentesco') }}" />
-                <select wire:model.defer="parentesco.{{ $item }}.parentesco" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                    <option value="">Seleccione...</option>
-                    <option value="Conyugue o Pareja">Conyugue o Pareja</option>
-                    <option value="Hijo de ambos">Hijo de ambos</option>
-                    <option value="Hijo del conyugue">Hijo del conyugue</option>
-                    <option value="Padre o Madre">Padre o Madre</option>
-                    <option value="Suegro o Suegra">Suegro o Suegra</option>
-                    <option value="Yerno o Nuera">Yerno o Nuera</option>
-                    <option value="Cuñado o Cuñada">Cuñado o Cuñada</option>
-                    <option value="Otro">Otro</option>
-                </select>
-                <x-jet-input-error for="parentesco" class="mt-2" />
-            </div>
-            <div class="col-span-6 sm:col-span-2">
-                <x-jet-label value="{{ __('Eliminar') }}" />
-                <button type="button" class="p-2 rounded bg-red-500 shadow-md" wire:click="deleteParentesco({{ $item }})" >X</button>
-            </div>
-        </div>
-        @endforeach
+                <div class="grid grid-cols-6 gap-6" wire:key="parentesco-{{ $key }}">
+                    <div class="col-span-6 sm:col-span-2" >
+                        <x-jet-label value="{{ __('Persona') }}" />
+                        <select wire:model.defer="persona.{{ $item }}.parentesco" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                            <option value="">Seleccione...</option>
+                            
+                        </select>
+                        <x-jet-input-error for="persona_id" class="mt-2" />
+                    </div>
+                    <div class="col-span-6 sm:col-span-2">
+                        <x-jet-label value="{{ __('Parentesco') }}" />
+                        <select wire:model.defer="parentesco.{{ $item }}.parentesco" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                            <option value="">Seleccione...</option>
+                            <option value="Conyugue o Pareja">Conyugue o Pareja</option>
+                            <option value="Hijo de ambos">Hijo de ambos</option>
+                            <option value="Hijo del conyugue">Hijo del conyugue</option>
+                            <option value="Padre o Madre">Padre o Madre</option>
+                            <option value="Suegro o Suegra">Suegro o Suegra</option>
+                            <option value="Yerno o Nuera">Yerno o Nuera</option>
+                            <option value="Cuñado o Cuñada">Cuñado o Cuñada</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                        <x-jet-input-error for="parentesco" class="mt-2" />
+                    </div>
+                    <div class="col-span-6 sm:col-span-2">
+                        <x-jet-label value="{{ __('Eliminar') }}" />
+                        <button type="button" class="p-2 rounded bg-red-500 shadow-md" wire:click="deleteParentesco({{ $item }})" >X</button>
+                    </div>
+                </div>
+                <hr class="col-span-5 sm:col-span-5 mt-2 mb-2">
+            @endforeach
         </div>
         <div class="col-span-6 sm:col-span-6">
             <button  wire:click="addParentesco"  type="button" class="block text-center w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-7">
-                Agregar Mes (Ciclos de pagos)
+                Agregar Parentesco
+            </button>
+        </div>
+        <hr class="col-span-6 sm:col-span-6">
+        <div class="col-span-6 sm:col-span-2">
+            <x-jet-label value="{{ __('Situacion Morbida') }}" />
+            <select wire:model.defer="situacion_morbida" multiple class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                @foreach($situacion_morbida as $s)
+                    <option value="{{ $s->id }}">{{ $s->nombre }}</option>
+                @endforeach
+            </select>
+            <x-jet-input-error for="situacion_morbida" class="mt-2" />
+        </div>
+        <div class="col-span-6 sm:col-span-2">
+            <x-jet-label value="{{ __('Situacion Profesional') }}" />
+            <select wire:model.defer="situacion_profesional" multiple class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                @foreach($situacion_profesional as $s)
+                    <option value="{{ $s->id }}">{{ $s->nombre }}</option>
+                @endforeach
+            </select>
+            <x-jet-input-error for="situacion_profesional" class="mt-2" />
+        </div>
+        <div class="col-span-6 sm:col-span-2">
+            <x-jet-label value="{{ __('Situacion Social') }}" />
+            <select wire:model.defer="situacion_social" multiple class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                @foreach($situacion_social as $s)
+                    <option value="{{ $s->id }}">{{ $s->nombre }}</option>
+                @endforeach
+            </select>
+            <x-jet-input-error for="situacion_social" class="mt-2" />
+        </div>
+        <hr class="col-span-6 sm:col-span-6">
+        <div class="col-span-6">
+            @foreach ($arrayAnexo as $it => $key)
+                <div class="grid grid-cols-5 gap-4" wire:key="anexo-{{ $key }}">
+                    <div class="col-span-5 sm:col-span-5" >
+                        <x-jet-label value="{{ __('Foto') }}" />
+                        <x-jet-input type="file" class="mt-1 block w-full" wire:model.defer="anexo.{{ $it }}.foto"/>
+                        <x-jet-input-error for="anexo.{{ $it }}.foto" class="mt-2" />
+                    </div>
+                    <div class="col-span-5 sm:col-span-5" >
+                        <x-jet-label value="{{ __('Nombre') }}" />
+                        <x-jet-input type="text" class="mt-1 block w-full" wire:model.defer="anexo.{{ $it }}.nombre"/>
+                        <x-jet-input-error for="anexo.{{ $it }}.nombre" class="mt-2" />
+                    </div>
+                    <div class="col-span-5 sm:col-span-5" >
+                        <x-jet-label value="{{ __('Descripción') }}" />
+                        <x-jet-input type="text" class="mt-1 block w-full" wire:model.defer="anexo.{{ $it }}.descripcion"/>
+                        <x-jet-input-error for="anexo.{{ $it }}.descripcion" class="mt-2" />
+                    </div>
+                    <div class="col-span-5 sm:col-span-5" >
+                        <x-jet-label value="{{ __('Fecha de Exp.') }}" />
+                        <x-jet-input type="date" class="mt-1 block w-full" wire:model.defer="anexo.{{ $it }}.fecha_exp"/>
+                        <x-jet-input-error for="anexo.{{ $it }}.fecha_exp" class="mt-2" />
+                    </div>
+                    <div class="col-span-5 sm:col-span-5">
+                        <x-jet-label value="{{ __('Eliminar') }}" />
+                        <button type="button" class="p-2 rounded bg-red-500 shadow-md" wire:click="deleteAnexo({{ $it }})" >X</button>
+                    </div>
+                </div>
+                <hr class="col-span-5 sm:col-span-5 mt-2 mb-2">
+            @endforeach
+        </div>
+        <div class="col-span-6 sm:col-span-6">
+            <button  wire:click="addAnexo"  type="button" class="block text-center w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-7">
+                Agregar Anexo
             </button>
         </div>
         {{-- <div class="col-span-6 sm:col-span-6">
