@@ -6,6 +6,7 @@ use App\Http\Livewire\PersonasComponent;
 use App\Http\Livewire\DashboardComponent;
 use App\Http\Livewire\IndexUserComponent;
 use App\Http\Livewire\ConfiguracionComponent;
+use App\Http\Livewire\SituacionSocialComponent;
 use App\Http\Livewire\SituacionMorbidaComponent;
 use App\Http\Livewire\SituacionProfesionalComponent;
 
@@ -35,5 +36,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group( function () {
     //mini crud
     Route::get('situacion-morbida',SituacionMorbidaComponent::class)->name('situacion-morbida');
     Route::get('situacion-profesional',SituacionProfesionalComponent::class)->name('situacion-profesional');
+    Route::get('situacion-social',SituacionSocialComponent::class)->name('situacion-social');
 
 });

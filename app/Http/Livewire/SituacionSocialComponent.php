@@ -2,10 +2,10 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\SituacionProfesional;
 use Livewire\Component;
+use App\Models\SituacionSocial;
 
-class SituacionProfesionalComponent extends Component
+class SituacionSocialComponent extends Component
 {
     public $modal = false;
     public $editar = false;
@@ -15,13 +15,13 @@ class SituacionProfesionalComponent extends Component
 
     public function render()
     {
-        return view('livewire.situacion-profesional-component',['situacion' => SituacionProfesional::where('status', 1)->get()]);
+        return view('livewire.situacion-social-component',['situacion' => SituacionSocial::where('status', 1)->get()]);
     }
 
     public function modalOpen($id = null)
     {
         if($id){
-            $situacion = SituacionProfesional::findOrfail($id);
+            $situacion = SituacionSocial::findOrfail($id);
             $this->nombre = $situacion->nombre;
             $this->situacion_id = $situacion->id;
             $this->editar = true;
@@ -45,32 +45,32 @@ class SituacionProfesionalComponent extends Component
         $this->validate([
             'nombre' => 'required|unique:situacion_morbidas',
         ]);
-        $create = SituacionProfesional::create([
+        $create = SituacionSocial::create([
             'nombre' => $this->nombre,
         ]);
 
         $this->closeModalAndResetField();
         if($create){
             flash('¡Situación Registrada correctamente!')->success();
-            return redirect()->route('situacion-profesional');
+            return redirect()->route('situacion-social');
         }else{
             flash('¡Error!')->error();
-            return redirect()->route('situacion-profesional');
+            return redirect()->route('situacion-social');
         }
     }
 
     public function editar(){
-        $situacion = SituacionProfesional::findOrfail($this->situacion_id);
+        $situacion = SituacionSocial::findOrfail($this->situacion_id);
         $situacion->nombre = $this->nombre;
 
         $this->closeModalAndResetField();
         
         if($situacion->save()){
             flash('¡Situación Editada correctamente!')->warning();
-            return redirect()->route('situacion-profesional');
+            return redirect()->route('situacion-social');
         }else{
             flash('¡Error!')->error();
-            return redirect()->route('situacion-profesional');
+            return redirect()->route('situacion-social');
         }
     }
 
@@ -81,17 +81,17 @@ class SituacionProfesionalComponent extends Component
 
     public function disabled()
     {
-        $situacion = SituacionProfesional::findOrfail($this->situacion_id);
+        $situacion = SituacionSocial::findOrfail($this->situacion_id);
         $situacion->status = 0;
 
         $this->closeModalAndResetField();
         
         if($situacion->save()){
             flash('¡Situación Eliminada correctamente!')->warning();
-            return redirect()->route('situacion-profesional');
+            return redirect()->route('situacion-social');
         }else{
             flash('¡Error!')->error();
-            return redirect()->route('situacion-profesional');
+            return redirect()->route('situacion-social');
         }
     }
 }

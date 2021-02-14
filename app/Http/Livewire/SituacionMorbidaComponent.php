@@ -51,7 +51,7 @@ class SituacionMorbidaComponent extends Component
 
         $this->closeModalAndResetField();
         if($create){
-            flash('Situación Registrada correctamente!')->success();
+            flash('¡Situación Registrada correctamente!')->success();
             return redirect()->route('situacion-morbida');
         }else{
             flash('¡Error!')->error();
