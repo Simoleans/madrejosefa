@@ -45,7 +45,7 @@
 
         <div class="col-span-6 sm:col-span-2">
             <x-jet-label for="fecha_nacimiento" value="{{ __('Fecha de nacimiento') }}" />
-            <x-jet-input type="date" class="mt-1 block w-full" wire:model="fecha_nac" wire:change="calculateEdad"/>
+            <x-jet-input type="date" class="mt-1 block w-full" max="{{  \Carbon\Carbon::today()->format('Y-m-d') }}" wire:model="fecha_nac" wire:change="calculateEdad"/>
             <x-jet-input-error for="fecha_nac" class="mt-2" />
         </div>
         <div class="col-span-6 sm:col-span-2">
@@ -131,7 +131,7 @@
         <div class="col-span-6 sm:col-span-2">
             <x-jet-label value="{{ __('Situacion Morbida') }}" />
             <select wire:model.defer="situacion_morbida" multiple class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                @foreach($situacion_morbida as $s)
+                @foreach($situacion_m as $s)
                     <option value="{{ $s->id }}">{{ $s->nombre }}</option>
                 @endforeach
             </select>
@@ -140,7 +140,7 @@
         <div class="col-span-6 sm:col-span-2">
             <x-jet-label value="{{ __('Situacion Profesional') }}" />
             <select wire:model.defer="situacion_profesional" multiple class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                @foreach($situacion_profesional as $s)
+                @foreach($situacion_p as $s)
                     <option value="{{ $s->id }}">{{ $s->nombre }}</option>
                 @endforeach
             </select>
@@ -149,7 +149,7 @@
         <div class="col-span-6 sm:col-span-2">
             <x-jet-label value="{{ __('Situacion Social') }}" />
             <select wire:model.defer="situacion_social" multiple class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                @foreach($situacion_social as $s)
+                @foreach($situacion_s as $s)
                     <option value="{{ $s->id }}">{{ $s->nombre }}</option>
                 @endforeach
             </select>
@@ -176,7 +176,7 @@
                     </div>
                     <div class="col-span-5 sm:col-span-5" >
                         <x-jet-label value="{{ __('Fecha de Exp.') }}" />
-                        <x-jet-input type="date" class="mt-1 block w-full" wire:model.defer="anexo.{{ $it }}.fecha_exp"/>
+                        <x-jet-input type="date" max="{{  \Carbon\Carbon::today()->format('Y-m-d') }}" class="mt-1 block w-full" wire:model.defer="anexo.{{ $it }}.fecha_exp"/>
                         <x-jet-input-error for="anexo.{{ $it }}.fecha_exp" class="mt-2" />
                     </div>
                     <div class="col-span-5 sm:col-span-5">

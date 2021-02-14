@@ -2,17 +2,24 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Anexo;
-use App\Models\Parentesco;
 use Carbon\Carbon;
+use App\Models\Anexo;
 use Livewire\Component;
 use App\Models\Personas;
+use App\Models\Parentesco;
+use Livewire\WithFileUploads;
 use App\Models\SituacionSocial;
 use App\Models\SituacionMorbida;
 use App\Models\SituacionProfesional;
+use App\Models\SituacionSocialPersona;
+use App\Models\SituacionMorbidaPersona;
+use App\Models\SituacionProfesionalPersona;
 
 class PersonasComponent extends Component
 {
+
+    use WithFileUploads;
+
     public $edad = 0;
     public $counter = 0;
     public $counterAnexo = 0;
@@ -20,15 +27,19 @@ class PersonasComponent extends Component
     public $arrayAnexo = []; 
     public $parentesco;
 
+    public $anexo;
+
+    public $situacion_morbida,$situacion_social,$situacion_profesional;
+
     public $nombres,$apellido_materno,$apellido_paterno,$nro_documento,$direccion,$estado_civil,$fecha_nac,$nivel_instruccion,$pais_origen;
     
     
     public function render()
     {
         return view('livewire.personas-component',[
-            'situacion_morbida' => SituacionMorbida::where('status' , 1)->get(),
-            'situacion_social' => SituacionSocial::where('status' , 1)->get(),
-            'situacion_profesional' => SituacionProfesional::where('status' , 1)->get()
+            'situacion_m' => SituacionMorbida::where('status' , 1)->get(),
+            'situacion_s' => SituacionSocial::where('status' , 1)->get(),
+            'situacion_p' => SituacionProfesional::where('status' , 1)->get()
         ]);
     }
 
@@ -76,11 +87,11 @@ class PersonasComponent extends Component
 
     public function storePersona()
     {
-
+        //dd($this->anexo);
         $this->validate([
             'parentesco.*.user' => 'required',
             'parentesco.*.parentesco' => 'required',
-            'parentesco' => 'required|array|max:5'
+            // 'parentesco' => 'required|array|max:5'
         ],
         [
             'parentesco.*.user.required' => 'El usuario no puede quedar vacio.',
@@ -98,17 +109,63 @@ class PersonasComponent extends Component
             'pais_origen' => $this->pais_origen,
             'nro_documento' => $this->nro_documento,
         ]);
+        
+        if($this->parentesco != null){
+            foreach($this->parentesco as $p)
+            {
+                Parentesco::create([
+                    'persona_id' => $persona->id,
+                    'user_id' => $p['user'],
+                    'parentesco' => $p['parentesco'],
+                ]);
+            }
+        }
 
-        foreach($this->parentesco as $p)
-        {
-            Parentesco::create([
-                'persona_id' => $persona->id,
-                'user_id' => $p['user'],
-                'parentesco' => $p['parentesco'],
-            ]);
+        if($this->situacion_morbida != null){
+            foreach($this->situacion_morbida as $s)
+            {
+                SituacionMorbidaPersona::create([
+                    'persona_id' => $persona->id,
+                    'situacion_id' => $s,
+                ]);
+            }
+        }
+
+        if($this->situacion_profesional != null){
+            foreach($this->situacion_profesional as $s)
+            {
+                SituacionProfesionalPersona::create([
+                    'persona_id' => $persona->id,
+                    'situacion_id' => $s,
+                ]);
+            }
+        }
+
+        if($this->situacion_social != null){
+            foreach($this->situacion_social as $s)
+            {
+                SituacionSocialPersona::create([
+                    'persona_id' => $persona->id,
+                    'situacion_id' => $s,
+                ]);
+            }
+        }
+
+        if($this->anexo != null){
+            foreach($this->anexo as $a)
+            {
+                Anexo::create([
+                    'persona_id' => $persona->id,
+                    'foto' => $a['foto']->store('personas/anexos', 'public'),
+                    'descripcion' => $a['descripcion'],
+                    'nombre' => $a['nombre'],
+                    'fecha_exp' => $a['fecha_exp']
+                ]);
+            }
         }
 
         flash('Persona Registrado correctamente!')->success();
+        dd("si!");
         
     }
 }

@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Anexo extends Model
+class SituacionSocialPersona extends Model
 {
     use HasFactory;
 
-    public $fillable = ['persona_id','foto','nombre','descripcion','fecha_exp'];
+    public $fillable = ['persona_id','situacion_id'];
 }
