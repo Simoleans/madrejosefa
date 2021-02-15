@@ -59,7 +59,21 @@ class EditarPersonaComponent extends Component
 
     public function editarPersona()
     {
-        dd("yes");
+
+        $this->persona->update([
+            'nombres' => $this->nombres,
+            'apellido_materno' => $this->apellido_materno,
+            'apellido_paterno' => $this->apellido_paterno,
+            'direccion' => $this->direccion,
+            'estado_civil' => $this->estado_civil,
+            'fecha_nac' => $this->fecha_nac,
+            'nivel_instruccion' => $this->nivel_instruccion,
+            'pais_origen' => $this->pais_origen,
+            'nro_documento' => $this->nro_documento,
+        ]);
+
+        flash('Persona Editada correctamente!')->success();
+        return redirect()->route('personas.index');
     }
 
     

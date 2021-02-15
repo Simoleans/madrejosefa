@@ -39,6 +39,10 @@
                         <x-jet-input id="nombre" type="text" class="mt-1 block w-full" wire:model.defer="nombre" required />
                         <x-jet-input-error for="nombre" class="mt-2" />
                     </div>
+                    <div class="col-span-6 sm:col-span-6 mt-2">
+                        <x-jet-label for="nombre" value="{{ __('Observaciones') }}" />
+                        <x-jet-input id="nombre" type="text" class="mt-1 block w-full" wire:model.defer="observaciones" required />
+                    </div>
                 </div>
             
         </x-slot>

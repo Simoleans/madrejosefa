@@ -9,5 +9,5 @@ class SituacionProfesional extends Model
 {
     use HasFactory;
 
-    public $fillable = ['nombre'];
+    public $fillable = ['nombre','observaciones'];
 }

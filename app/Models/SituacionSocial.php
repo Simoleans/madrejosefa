@@ -9,5 +9,5 @@ class SituacionSocial extends Model
 {
     use HasFactory;
 
-    public $fillable = ['nombre'];
+    public $fillable = ['nombre','observaciones'];
 }

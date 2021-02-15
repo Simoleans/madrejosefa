@@ -12,6 +12,7 @@ class SituacionMorbidaComponent extends Component
     public $confirmSituacionDelete = false;
 
     public $situacion_id,$nombre;
+    public $observaciones;
 
     public function render()
     {
@@ -23,6 +24,7 @@ class SituacionMorbidaComponent extends Component
         if($id){
             $situacion = SituacionMorbida::findOrfail($id);
             $this->nombre = $situacion->nombre;
+            $this->observaciones = $situacion->observaciones;
             $this->situacion_id = $situacion->id;
             $this->editar = true;
             $this->modal = true;
@@ -37,6 +39,7 @@ class SituacionMorbidaComponent extends Component
         $this->modal = false;
         $this->editar = false;
         $this->nombre = '';
+        $this->observaciones = '';
         $this->confirmSituacionDelete = false;
         $this->situacion_id = '';
     }
@@ -47,6 +50,7 @@ class SituacionMorbidaComponent extends Component
         ]);
         $create = SituacionMorbida::create([
             'nombre' => $this->nombre,
+            'observaciones' => $this->observaciones
         ]);
 
         $this->closeModalAndResetField();
@@ -62,6 +66,7 @@ class SituacionMorbidaComponent extends Component
     public function editar(){
         $situacion = SituacionMorbida::findOrfail($this->situacion_id);
         $situacion->nombre = $this->nombre;
+        $situacion->observaciones = $this->observaciones;
 
         $this->closeModalAndResetField();
         

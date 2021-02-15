@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Anexo;
 use Livewire\Component;
 use App\Models\Personas;
 use App\Models\Parentesco;
+use Livewire\WithFileUploads;
 use App\Models\SituacionSocial;
 use App\Models\SituacionMorbida;
 use App\Models\SituacionProfesional;
@@ -14,10 +16,12 @@ use App\Models\SituacionProfesionalPersona;
 
 class AgregadoPersonaComponent extends Component
 {
-
+    use WithFileUploads;
+    
     public $editarParentescoModal = false;
     public $crearParentescoModal = false;
     public $crearSituacionProfesionalModal = false;
+    public $crearAnexoModal = false;
     public $crearSituacionSocialModal = false;
     public $crearSituacionMorbidaModal = false;
     public $parentesco_id;
@@ -26,6 +30,8 @@ class AgregadoPersonaComponent extends Component
     public $persona;
     public $personas = [];
     public $user;
+
+    public $foto,$nombre,$descripcion,$fecha_exp;
 
     public $situacion_morbida,$situacion_profesional,$situacion_social;
     
@@ -190,6 +196,33 @@ class AgregadoPersonaComponent extends Component
         $data = SituacionSocialPersona::findOrfail($id);
         $data->delete();
         flash()->overlay('Has eliminado la situación correctamente', 'Eliminar Situación Social');
+        return redirect()->route('personas.agregado',$this->persona->id);
+    }
+
+    public function modalCreateAnexo()
+    {
+        $this->crearAnexoModal = true;
+    }
+
+    public function agregarAnexoform()
+    {
+        Anexo::create([
+            'persona_id' => $this->persona->id,
+            'foto' => $this->foto->store('personas/anexos', 'public'),
+            'descripcion' => $this->descripcion,
+            'nombre' => $this->nombre,
+            'fecha_exp' => $this->fecha_exp
+        ]);
+
+        flash()->overlay('Has agregado el anexo correctamente', 'Agregar Anexo');
+        return redirect()->route('personas.agregado',$this->persona->id);
+    }
+
+    public function deleteAnexo($id)
+    {
+        $data = Anexo::findOrfail($id);
+        $data->delete();
+        flash()->overlay('Has eliminado anexo correctamente', 'Eliminar Anexo');
         return redirect()->route('personas.agregado',$this->persona->id);
     }
 

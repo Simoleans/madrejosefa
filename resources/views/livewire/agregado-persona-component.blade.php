@@ -15,7 +15,7 @@
                 <div class="col-span-6 sm:col-span-2">
                     <div class="bg-gray-300 shadow-md rounded-md">
                         <div class="flex flex-col justify-center items-center p-2">
-                            <p class="text-lg font-extrabold text-gray-700 text-center">{{ $p->persona->nombres }} </p>
+                            <p class="text-lg font-extrabold text-gray-700 text-center">{{ $p->user->nombres }} </p>
                             <p class="text-md font-bold text-gray-700">{{ $p->parentesco }}</p>
                         </div>
                         <div class="flex justify-end items-center gap-2 p-2">
@@ -85,58 +85,25 @@
                 </button>
             </div>
             <hr class="col-span-6 sm:col-span-6">
-            
-            
-            <hr class="col-span-6 sm:col-span-6">
-            {{-- <div class="col-span-6">
-                @foreach ($arrayAnexo as $it => $key)
-                    <div class="grid grid-cols-5 gap-4" wire:key="anexo-{{ $key }}">
-                        <div class="col-span-5 sm:col-span-5" >
-                            <x-jet-label value="{{ __('Foto') }}" />
-                            <x-jet-input type="file" class="mt-1 block w-full" wire:model.defer="anexo.{{ $it }}.foto"/>
-                            <x-jet-input-error for="anexo.{{ $it }}.foto" class="mt-2" />
+            @foreach($this->persona->anexos as $p)
+                <div class="col-span-6 sm:col-span-2">
+                    <div class="bg-gray-300 shadow-md rounded-md">
+                        <div class="flex flex-col justify-center items-center p-2">
+                            <p class="text-lg font-extrabold text-gray-700 text-center">{{ $p->nombre }} </p>
+                            <p class="text-md font-bold text-gray-700 text-center">{{ $p->fecha_exp }} </p>
                         </div>
-                        <div class="col-span-5 sm:col-span-5" >
-                            <x-jet-label value="{{ __('Nombre') }}" />
-                            <x-jet-input type="text" class="mt-1 block w-full" wire:model.defer="anexo.{{ $it }}.nombre"/>
-                            <x-jet-input-error for="anexo.{{ $it }}.nombre" class="mt-2" />
-                        </div>
-                        <div class="col-span-5 sm:col-span-5" >
-                            <x-jet-label value="{{ __('Descripción') }}" />
-                            <x-jet-input type="text" class="mt-1 block w-full" wire:model.defer="anexo.{{ $it }}.descripcion"/>
-                            <x-jet-input-error for="anexo.{{ $it }}.descripcion" class="mt-2" />
-                        </div>
-                        <div class="col-span-5 sm:col-span-5" >
-                            <x-jet-label value="{{ __('Fecha de Exp.') }}" />
-                            <x-jet-input type="date" max="{{  \Carbon\Carbon::today()->format('Y-m-d') }}" class="mt-1 block w-full" wire:model.defer="anexo.{{ $it }}.fecha_exp"/>
-                            <x-jet-input-error for="anexo.{{ $it }}.fecha_exp" class="mt-2" />
-                        </div>
-                        <div class="col-span-5 sm:col-span-5">
-                            <x-jet-label value="{{ __('Eliminar') }}" />
-                            <button type="button" class="p-2 rounded bg-red-500 shadow-md" wire:click="deleteAnexo({{ $it }})" >X</button>
+                        <div class="flex justify-end items-center gap-2 p-2">
+                            <x-jet-button type="button" class="bg-red-500 p-2 rounded hover:bg-red-700" wire:click="deleteAnexo({{ $p->id }})">Eliminar</x-jet-button>
                         </div>
                     </div>
-                    <hr class="col-span-5 sm:col-span-5 mt-2 mb-2">
-                @endforeach
-            </div> --}}
+                </div>
+            @endforeach
             <div class="col-span-6 sm:col-span-6">
-                <button  wire:click="addAnexo"  type="button" class="block text-center w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-7">
+                <button  wire:click="modalCreateAnexo"  type="button" class="block text-center w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-7">
                     Agregar Anexo
                 </button>
             </div>
         </x-slot>
-
-        <x-slot name="actions">
-            <x-jet-action-message class="mr-3" on="storeUser">
-                {{ __('Saved.') }}
-            </x-jet-action-message>
-
-            <x-jet-button>
-                {{ __('Guardar') }}
-            </x-jet-button>
-        </x-slot>
-
-        
 
     </x-jet-form-section>
     {{-- <x-jet-dialog-modal wire:model="editarParentescoModal">
@@ -328,12 +295,56 @@
         </x-slot>
     
         <x-slot name="footer">
-            <x-jet-secondary-button wire:click="$toggle('agregarSituacionSocialform')" wire:loading.attr="disabled">
+            <x-jet-secondary-button wire:click="$toggle('crearSituacionSocialModal')" wire:loading.attr="disabled">
                 {{ __('Cerrar') }}
             </x-jet-secondary-button>
     
             <x-jet-button class="ml-2 bg-green-500" type="submit" wire:loading.attr="disabled">
                 {{ __('Agregar Situación') }}
+            </x-jet-button>
+        </form>
+        </x-slot>
+    </x-jet-dialog-modal>
+
+    <x-jet-dialog-modal wire:model="crearAnexoModal">
+        <x-slot name="title">
+            {{ __('Agregar Anexo') }}
+        </x-slot>
+    
+        <x-slot name="content">
+            <form wire:submit.prevent="agregarAnexoform">
+                <div class="grid grid-cols-6 gap-6">
+                    <div class="col-span-5 sm:col-span-5" >
+                        <x-jet-label value="{{ __('Foto') }}" />
+                        <x-jet-input type="file" class="mt-1 block w-full" wire:model.defer="foto"/>
+                        <x-jet-input-error for="foto" class="mt-2" />
+                    </div>
+                    <div class="col-span-5 sm:col-span-5" >
+                        <x-jet-label value="{{ __('Nombre') }}" />
+                        <x-jet-input type="text" class="mt-1 block w-full" wire:model.defer="nombre"/>
+                        <x-jet-input-error for="nombre" class="mt-2" />
+                    </div>
+                    <div class="col-span-5 sm:col-span-5" >
+                        <x-jet-label value="{{ __('Descripción') }}" />
+                        <x-jet-input type="text" class="mt-1 block w-full" wire:model.defer="descripcion"/>
+                        <x-jet-input-error for="descripcion" class="mt-2" />
+                    </div>
+                    <div class="col-span-5 sm:col-span-5" >
+                        <x-jet-label value="{{ __('Fecha de Exp.') }}" />
+                        <x-jet-input type="date" max="{{  \Carbon\Carbon::today()->format('Y-m-d') }}" class="mt-1 block w-full" wire:model.defer="fecha_exp"/>
+                        <x-jet-input-error for="fecha_exp" class="mt-2" />
+                    </div>
+                </div>
+            
+        </x-slot>
+    
+        <x-slot name="footer">
+            <x-jet-secondary-button wire:click="$toggle('crearAnexoModal')" wire:loading.attr="disabled">
+                {{ __('Cerrar') }}
+            </x-jet-secondary-button>
+    
+            <x-jet-button class="ml-2 bg-green-500" type="submit" wire:loading.attr="disabled">
+                {{ __('Agregar Anexo') }}
             </x-jet-button>
         </form>
         </x-slot>

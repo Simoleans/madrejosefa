@@ -19,7 +19,9 @@ class Personas extends Model
     'nivel_instruccion',
     'pais_origen',
     'nro_documento',
-    'status'
+    'status',
+    'observaciones',
+    'tipo_documento'
     ];
 
     public function getFullNameAttribute()
@@ -45,5 +47,10 @@ class Personas extends Model
     public function s_social()
     {
         return $this->hasMany(SituacionSocialPersona::class,'persona_id');
+    }
+
+    public function anexos()
+    {
+        return $this->hasMany(Anexo::class,'persona_id');
     }
 }

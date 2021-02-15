@@ -20,6 +20,8 @@ class PersonasComponent extends Component
 
     use WithFileUploads;
 
+    public $crearParentescoModal = false;
+    public $user;
     public $edad = 0;
     public $counter = 0;
     public $counterAnexo = 0;
@@ -27,11 +29,13 @@ class PersonasComponent extends Component
     public $arrayAnexo = []; 
     public $parentesco;
 
+    // public $personas = [];
+
     public $anexo;
 
     public $situacion_morbida,$situacion_social,$situacion_profesional;
 
-    public $nombres,$apellido_materno,$apellido_paterno,$nro_documento,$direccion,$estado_civil,$fecha_nac,$nivel_instruccion,$pais_origen;
+    public $nombres,$apellido_materno,$apellido_paterno,$nro_documento,$direccion,$estado_civil,$fecha_nac,$nivel_instruccion,$pais_origen,$observaciones,$tipo_documento;
     
     
     public function render()
@@ -49,12 +53,30 @@ class PersonasComponent extends Component
         $this->edad = Carbon::parse($this->fecha_nac)->age;
     }
 
+    public function userName($id)
+    {
+        //dd($this->user);
+        return Personas::findOrfail($id)->nombres;
+    }
+
     public function addParentesco()
     {
-        // dd("parent");
+        if($this->user == '')
+        {
+            return $this->addError('userError', 'No puede dejar el campo de persona vacío.');
+        }
+        
+         if(in_array($this->user, array_column($this->arrayParentesco, 'user')))
+         {
+            return $this->addError('userError', 'Ya esta persona tiene un parentesco.');
+         }
         $i = $this->counter + 1;
         $this->counter = $i;
-        array_push($this->arrayParentesco, $i);
+        array_push($this->arrayParentesco, ['parentesco' => $this->parentesco , 'user' => $this->user,'name' => $this->userName($this->user)]);
+        $this->reset(['parentesco','user']);
+        $this->dispatchBrowserEvent('reset-user', ['value' => '']);
+        $this->crearParentescoModal = false;
+        // dd($this->arrayParentesco);
     }
     
     /**
@@ -88,11 +110,14 @@ class PersonasComponent extends Component
 
     public function storePersona()
     {
-        //dd($this->anexo);
         $this->validate([
             'parentesco.*.user' => 'required',
             'parentesco.*.parentesco' => 'required',
-            // 'parentesco' => 'required|array|max:5'
+            'tipo_documento' => 'required',
+            'nro_documento' => 'required|unique:personas',
+            'nombres' => 'required',
+            'direccion' => 'required',
+            'pais_origen' => 'required'
         ],
         [
             'parentesco.*.user.required' => 'El usuario no puede quedar vacio.',
@@ -109,10 +134,23 @@ class PersonasComponent extends Component
             'nivel_instruccion' => $this->nivel_instruccion,
             'pais_origen' => $this->pais_origen,
             'nro_documento' => $this->nro_documento,
+            'tipo_documento' => $this->tipo_documento,
+            'observaciones' => $this->observaciones
         ]);
         
-        if($this->parentesco != null){
-            foreach($this->parentesco as $p)
+        // if($this->parentesco != null){
+        //     foreach($this->parentesco as $p)
+        //     {
+        //         Parentesco::create([
+        //             'persona_id' => $persona->id,
+        //             'user_id' => $p['user'],
+        //             'parentesco' => $p['parentesco'],
+        //         ]);
+        //     }
+        // }
+
+        if(count($this->arrayParentesco) > 0){
+            foreach($this->arrayParentesco as $p)
             {
                 Parentesco::create([
                     'persona_id' => $persona->id,
@@ -158,9 +196,9 @@ class PersonasComponent extends Component
                 Anexo::create([
                     'persona_id' => $persona->id,
                     'foto' => $a['foto']->store('personas/anexos', 'public'),
-                    'descripcion' => $a['descripcion'],
-                    'nombre' => $a['nombre'],
-                    'fecha_exp' => $a['fecha_exp']
+                    'descripcion' => $a['descripcion'] ?? '',
+                    'nombre' => $a['nombre'] ?? '',
+                    'fecha_exp' => $a['fecha_exp'] ?? ''
                 ]);
             }
         }
@@ -169,4 +207,12 @@ class PersonasComponent extends Component
         return redirect()->route('personas.index');
         
     }
+
+    public function modalCreate()
+    {
+        // $this->personas = Personas::where('status',1)->get()->toArray();
+        $this->crearParentescoModal = true;
+    }
+
+
 }

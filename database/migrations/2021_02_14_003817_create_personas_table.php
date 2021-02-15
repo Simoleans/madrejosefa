@@ -16,12 +16,12 @@ class CreatePersonasTable extends Migration
         Schema::create('personas', function (Blueprint $table) {
             $table->id();
             $table->string('nombres');
-            $table->string('apellido_materno');
-            $table->string('apellido_paterno');
-            $table->string('direccion');
-            $table->string('estado_civil',25);
-            $table->date('fecha_nac');
-            $table->string('nivel_instruccion');
+            $table->string('apellido_materno')->nullable();
+            $table->string('apellido_paterno')->nullable();
+            $table->string('direccion')->nullable();
+            $table->string('estado_civil',25)->nullable();
+            $table->date('fecha_nac')->nullable();
+            $table->string('nivel_instruccion')->nullable();
             $table->string('pais_origen');
             $table->string('nro_documento');
             $table->tinyInteger('status')->default(1);

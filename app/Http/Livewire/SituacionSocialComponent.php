@@ -12,6 +12,7 @@ class SituacionSocialComponent extends Component
     public $confirmSituacionDelete = false;
 
     public $situacion_id,$nombre;
+    public $observaciones;
 
     public function render()
     {
@@ -24,6 +25,7 @@ class SituacionSocialComponent extends Component
             $situacion = SituacionSocial::findOrfail($id);
             $this->nombre = $situacion->nombre;
             $this->situacion_id = $situacion->id;
+            $this->observaciones = $situacion->observaciones;
             $this->editar = true;
             $this->modal = true;
         }else{
@@ -37,6 +39,7 @@ class SituacionSocialComponent extends Component
         $this->modal = false;
         $this->editar = false;
         $this->nombre = '';
+        $this->observaciones = '';
         $this->confirmSituacionDelete = false;
         $this->situacion_id = '';
     }
@@ -47,6 +50,7 @@ class SituacionSocialComponent extends Component
         ]);
         $create = SituacionSocial::create([
             'nombre' => $this->nombre,
+            'observaciones' => $this->observaciones
         ]);
 
         $this->closeModalAndResetField();
@@ -62,6 +66,7 @@ class SituacionSocialComponent extends Component
     public function editar(){
         $situacion = SituacionSocial::findOrfail($this->situacion_id);
         $situacion->nombre = $this->nombre;
+        $situacion->observaciones = $this->observaciones;
 
         $this->closeModalAndResetField();
         

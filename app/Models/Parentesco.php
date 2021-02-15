@@ -15,4 +15,9 @@ class Parentesco extends Model
     {
         return $this->belongsTo(Personas::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(Personas::class,'user_id');
+    }
 }
