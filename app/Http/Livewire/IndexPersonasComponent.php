@@ -12,6 +12,7 @@ class IndexPersonasComponent extends Component
     
     public $search = '';
     public $confirmDeletePersona = false;
+    public $confirmActivePersona = false;
     public $persona_id;
 
     public function updatingSearch()
@@ -33,6 +34,28 @@ class IndexPersonasComponent extends Component
     public function confirmDelete($id){
         $this->confirmDeletePersona = true;
         $this->persona_id = $id;
+    }
+
+    public function confirmActive($id)
+    {
+        $this->confirmActivePersona = true;
+        $this->persona_id = $id;
+    }
+
+    public function enabled()
+    {
+        $persona = Personas::findOrfail($this->persona_id);
+        $persona->status = 1;
+
+        $this->closeModalAndResetField();
+        
+        if($persona->save()){
+            flash('Persona Habilitada correctamente!')->success();
+            return redirect()->route('personas.index');
+        }else{
+            flash('¡Error!')->error();
+            return redirect()->route('personas.index');
+        }
     }
 
     public function disabled()

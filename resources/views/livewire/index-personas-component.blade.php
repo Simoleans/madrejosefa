@@ -18,7 +18,11 @@
                 </div>
                 <div class="flex justify-center gap-2 p-2">
                     <x-jet-button class="bg-green-500 p-2 rounded-md hover:bg-green-700" wire:click="editar({{ $p->id }})">Editar</x-jet-button>
-                    <x-jet-button class="bg-red-500 p-2 rounded hover:bg-red-700" wire:click="confirmDelete({{ $p->id }})">Eliminar</x-jet-button>
+                    @if($p->status == 0)
+                        <x-jet-button class="bg-purple-500 p-2 rounded hover:bg-purple-700" wire:click="confirmActive({{ $p->id }})">Activar</x-jet-button>
+                    @else
+                        <x-jet-button class="bg-red-500 p-2 rounded hover:bg-red-700" wire:click="confirmDelete({{ $p->id }})">Eliminar</x-jet-button>
+                    @endif
                 </div>
                 <div class="flex flex-col items-center p-2">
                     <x-jet-button class="bg-yellow-500 p-2 rounded-md hover:bg-yellow-700 text-center" wire:click="agregados({{ $p->id }})">Editar Agregados </x-jet-button>
@@ -103,7 +107,7 @@
         </x-slot>
 
         <x-slot name="content">
-            {{ __('¿Estas seguro que deseas eliminar esta persona?') }}
+            {{ __('¿Estas seguro que deseas ELIMINAR esta persona?') }}
         </x-slot>
 
         <x-slot name="footer">
@@ -113,6 +117,26 @@
 
             <x-jet-danger-button class="ml-2" wire:click="disabled" wire:loading.attr="disabled">
                 {{ __('Si, Eliminar.') }}
+            </x-jet-danger-button>
+        </x-slot>
+    </x-jet-dialog-modal>
+
+    <x-jet-dialog-modal wire:model="confirmActivePersona">
+        <x-slot name="title">
+            {{ __('Activar Persona') }}
+        </x-slot>
+
+        <x-slot name="content">
+            {{ __('¿Estas seguro que deseas ACTIVAR esta persona?') }}
+        </x-slot>
+
+        <x-slot name="footer">
+            <x-jet-secondary-button wire:click="$toggle('confirmActivePersona')" wire:loading.attr="enabled">
+                {{ __('¡No!') }}
+            </x-jet-secondary-button>
+
+            <x-jet-danger-button class="ml-2" wire:click="enabled" wire:loading.attr="enabled">
+                {{ __('Si, activar.') }}
             </x-jet-danger-button>
         </x-slot>
     </x-jet-dialog-modal>
