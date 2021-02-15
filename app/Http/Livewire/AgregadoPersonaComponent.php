@@ -8,13 +8,17 @@ use App\Models\Parentesco;
 use App\Models\SituacionSocial;
 use App\Models\SituacionMorbida;
 use App\Models\SituacionProfesional;
+use App\Models\SituacionSocialPersona;
 use App\Models\SituacionMorbidaPersona;
+use App\Models\SituacionProfesionalPersona;
 
 class AgregadoPersonaComponent extends Component
 {
 
     public $editarParentescoModal = false;
     public $crearParentescoModal = false;
+    public $crearSituacionProfesionalModal = false;
+    public $crearSituacionSocialModal = false;
     public $crearSituacionMorbidaModal = false;
     public $parentesco_id;
     public $parentescos;
@@ -23,24 +27,13 @@ class AgregadoPersonaComponent extends Component
     public $personas = [];
     public $user;
 
-    public $situacion_morbida;
+    public $situacion_morbida,$situacion_profesional,$situacion_social;
     
     public function mount(Personas $id)
     {
         $this->persona = $id;
         $this->parentescos = $id->parentescos;
         
-        // $this->nombres = $id->nombres;
-        // $this->nro_documento = $id->nro_documento;
-        // $this->apellido_paterno = $id->apellido_paterno;
-        // $this->apellido_materno = $id->apellido_materno;
-        // $this->direccion = $id->direccion;
-        // $this->fecha_nac = $id->fecha_nac;
-        // $this->edad = Carbon::parse($id->fecha_nac)->age;
-        // $this->nivel_instruccion = $id->nivel_instruccion;
-        // $this->estado_civil = $id->estado_civil;
-        // $this->pais_origen = $id->pais_origen;
-
     }
 
     public function render()
@@ -101,11 +94,6 @@ class AgregadoPersonaComponent extends Component
         $this->crearParentescoModal = true;
     }
 
-    public function modalCreateSituacionMorbida()
-    {
-        $this->crearSituacionMorbidaModal = true;
-    }
-
     public function agregarParentescoForm()
     {
         Parentesco::create([
@@ -118,12 +106,17 @@ class AgregadoPersonaComponent extends Component
         return redirect()->route('personas.agregado',$this->persona->id);
     }
 
+    public function modalCreateSituacionMorbida()
+    {
+        $this->crearSituacionMorbidaModal = true;
+    }
+
     public function agregarSituacionMorbidaform()
     {
         $exists = SituacionMorbidaPersona::where('situacion_id',$this->situacion_morbida)->where('persona_id', $this->persona->id)->exists();
         if($exists)
         {
-            return $this->addError('exists', 'Ya este situación está agregada.');
+            return $this->addError('exists', 'Ya esta situación existe en la persona.');
         }
         SituacionMorbidaPersona::create([
             'persona_id' => $this->persona->id,
@@ -139,6 +132,64 @@ class AgregadoPersonaComponent extends Component
         $data = SituacionMorbidaPersona::findOrfail($id);
         $data->delete();
         flash()->overlay('Has eliminado la situación correctamente', 'Eliminar Situación Morbida');
+        return redirect()->route('personas.agregado',$this->persona->id);
+    }
+
+    public function modalCreateSituacionProfesional()
+    {
+        $this->crearSituacionProfesionalModal = true;
+    }
+
+    public function agregarSituacionProfesionalform()
+    {
+        $exists = SituacionProfesionalPersona::where('situacion_id',$this->situacion_profesional)->where('persona_id', $this->persona->id)->exists();
+        if($exists)
+        {
+            return $this->addError('exists', 'Ya esta situación existe en la persona.');
+        }
+        SituacionProfesionalPersona::create([
+            'persona_id' => $this->persona->id,
+            'situacion_id' => $this->situacion_profesional,
+        ]);
+
+        flash()->overlay('Has agregado la situacion profesional correctamente', 'Agregar Situacion Profesional');
+        return redirect()->route('personas.agregado',$this->persona->id);
+    }
+
+    public function deleteSituacionProfesional($id)
+    {
+        $data = SituacionProfesionalPersona::findOrfail($id);
+        $data->delete();
+        flash()->overlay('Has eliminado la situación correctamente', 'Eliminar Situación Profesional');
+        return redirect()->route('personas.agregado',$this->persona->id);
+    }
+
+    public function modalCreateSituacionSocial()
+    {
+        $this->crearSituacionSocialModal = true;
+    }
+
+    public function agregarSituacionSocialform()
+    {
+        $exists = SituacionSocialPersona::where('situacion_id',$this->situacion_social)->where('persona_id', $this->persona->id)->exists();
+        if($exists)
+        {
+            return $this->addError('exists', 'Ya esta situación existe en la persona.');
+        }
+        SituacionSocialPersona::create([
+            'persona_id' => $this->persona->id,
+            'situacion_id' => $this->situacion_social,
+        ]);
+
+        flash()->overlay('Has agregado la situacion social correctamente', 'Agregar Situacion Social');
+        return redirect()->route('personas.agregado',$this->persona->id);
+    }
+
+    public function deleteSituacionSocial($id)
+    {
+        $data = SituacionSocialPersona::findOrfail($id);
+        $data->delete();
+        flash()->overlay('Has eliminado la situación correctamente', 'Eliminar Situación Social');
         return redirect()->route('personas.agregado',$this->persona->id);
     }
 

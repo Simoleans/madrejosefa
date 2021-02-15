@@ -13,6 +13,6 @@ class SituacionProfesionalPersona extends Model
 
     public function situacion()
     {
-        return $this->belongsto(SituacionMorbida::class,'situacion_id');
+        return $this->belongsto(SituacionProfesional::class,'situacion_id');
     }
 }

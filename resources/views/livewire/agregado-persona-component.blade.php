@@ -56,13 +56,13 @@
                             <p class="text-lg font-extrabold text-gray-700 text-center">{{ $p->situacion->nombre }} </p>
                         </div>
                         <div class="flex justify-end items-center gap-2 p-2">
-                            <x-jet-button type="button" class="bg-red-500 p-2 rounded hover:bg-red-700" wire:click="confirmDelete({{ $p->id }})">Eliminar</x-jet-button>
+                            <x-jet-button type="button" class="bg-red-500 p-2 rounded hover:bg-red-700" wire:click="deleteSituacionProfesional({{ $p->id }})">Eliminar</x-jet-button>
                         </div>
                     </div>
                 </div>
             @endforeach
             <div class="col-span-6 sm:col-span-6">
-                <button  wire:click="addParentesco"  type="button" class="block text-center w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-7">
+                <button  wire:click="modalCreateSituacionProfesional"  type="button" class="block text-center w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-7">
                     Agregar Situación Profesional
                 </button>
             </div>
@@ -74,13 +74,13 @@
                             <p class="text-lg font-extrabold text-gray-700 text-center">{{ $p->situacion->nombre }} </p>
                         </div>
                         <div class="flex justify-end items-center gap-2 p-2">
-                            <x-jet-button type="button" class="bg-red-500 p-2 rounded hover:bg-red-700" wire:click="confirmDelete({{ $p->id }})">Eliminar</x-jet-button>
+                            <x-jet-button type="button" class="bg-red-500 p-2 rounded hover:bg-red-700" wire:click="deleteSituacionSocial({{ $p->id }})">Eliminar</x-jet-button>
                         </div>
                     </div>
                 </div>
             @endforeach
             <div class="col-span-6 sm:col-span-6">
-                <button  wire:click="addParentesco"  type="button" class="block text-center w-full bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mt-7">
+                <button  wire:click="modalCreateSituacionSocial"  type="button" class="block text-center w-full bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mt-7">
                     Agregar Situación Social
                 </button>
             </div>
@@ -265,7 +265,75 @@
             </x-jet-secondary-button>
     
             <x-jet-button class="ml-2 bg-green-500" type="submit" wire:loading.attr="disabled">
-                {{ __('Agregar Parentesco') }}
+                {{ __('Agregar Situación') }}
+            </x-jet-button>
+        </form>
+        </x-slot>
+    </x-jet-dialog-modal>
+
+    <x-jet-dialog-modal wire:model="crearSituacionProfesionalModal">
+        <x-slot name="title">
+            {{ __('Agregar Situación Profesional') }}
+        </x-slot>
+    
+        <x-slot name="content">
+            <form wire:submit.prevent="agregarSituacionProfesionalform">
+                <div class="grid grid-cols-6 gap-6">
+                    <div class="col-span-6 sm:col-span-6">
+                        <x-jet-label value="{{ __('Situación Profesional') }}" />
+                            <select required wire:model="situacion_profesional" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                                <option value="">Seleccione...</option>
+                                @foreach($situacion_p as $p)
+                                    <option value="{{ $p->id }}">{{ $p->nombre }}</option>
+                                @endforeach
+                            </select>
+                        <x-jet-input-error for="exists" class="mt-2" />
+                    </div>
+                </div>
+            
+        </x-slot>
+    
+        <x-slot name="footer">
+            <x-jet-secondary-button wire:click="$toggle('crearSituacionProfesionalModal')" wire:loading.attr="disabled">
+                {{ __('Cerrar') }}
+            </x-jet-secondary-button>
+    
+            <x-jet-button class="ml-2 bg-green-500" type="submit" wire:loading.attr="disabled">
+                {{ __('Agregar Situación') }}
+            </x-jet-button>
+        </form>
+        </x-slot>
+    </x-jet-dialog-modal>
+
+    <x-jet-dialog-modal wire:model="crearSituacionSocialModal">
+        <x-slot name="title">
+            {{ __('Agregar Situación Social') }}
+        </x-slot>
+    
+        <x-slot name="content">
+            <form wire:submit.prevent="agregarSituacionSocialform">
+                <div class="grid grid-cols-6 gap-6">
+                    <div class="col-span-6 sm:col-span-6">
+                        <x-jet-label value="{{ __('Situación Social') }}" />
+                            <select required wire:model="situacion_social" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                                <option value="">Seleccione...</option>
+                                @foreach($situacion_s as $p)
+                                    <option value="{{ $p->id }}">{{ $p->nombre }}</option>
+                                @endforeach
+                            </select>
+                        <x-jet-input-error for="exists" class="mt-2" />
+                    </div>
+                </div>
+            
+        </x-slot>
+    
+        <x-slot name="footer">
+            <x-jet-secondary-button wire:click="$toggle('agregarSituacionSocialform')" wire:loading.attr="disabled">
+                {{ __('Cerrar') }}
+            </x-jet-secondary-button>
+    
+            <x-jet-button class="ml-2 bg-green-500" type="submit" wire:loading.attr="disabled">
+                {{ __('Agregar Situación') }}
             </x-jet-button>
         </form>
         </x-slot>
