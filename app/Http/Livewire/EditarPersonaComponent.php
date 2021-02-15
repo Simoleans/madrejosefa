@@ -14,16 +14,8 @@ class EditarPersonaComponent extends Component
 {
     public $persona;
     public $edad = 0;
-    
 
-
-    // public $situacion_m;
-    
-
-    public $situacion_morbida = [];
-    public $situacion_social,$situacion_profesional;
-
-    public $nombres,$apellido_materno,$apellido_paterno,$nro_documento,$direccion,$estado_civil,$fecha_nac,$nivel_instruccion,$pais_origen;
+    public $nombres,$apellido_materno,$apellido_paterno,$nro_documento,$direccion,$estado_civil,$fecha_nac,$nivel_instruccion,$pais_origen,$tipo_documento,$observaciones;
 
     public function mount(Personas $id)
     {
@@ -40,16 +32,14 @@ class EditarPersonaComponent extends Component
         $this->nivel_instruccion = $id->nivel_instruccion;
         $this->estado_civil = $id->estado_civil;
         $this->pais_origen = $id->pais_origen;
+        $this->observaciones = $id->observaciones;
+        $this->tipo_documento = $id->tipo_documento;
 
     }
 
     public function render()
     {
-        return view('livewire.editar-persona-component',[
-            'situacion_m' => SituacionMorbida::where('status' , 1)->get(),
-            'situacion_s' => SituacionSocial::where('status' , 1)->get(),
-            'situacion_p' => SituacionProfesional::where('status' , 1)->get(),
-        ]);
+        return view('livewire.editar-persona-component');
     }
 
     public function calculateEdad()
@@ -70,6 +60,8 @@ class EditarPersonaComponent extends Component
             'nivel_instruccion' => $this->nivel_instruccion,
             'pais_origen' => $this->pais_origen,
             'nro_documento' => $this->nro_documento,
+            'tipo_documento' => $this->tipo_documento,
+            'observaciones' => $this->observaciones
         ]);
 
         flash('Persona Editada correctamente!')->success();

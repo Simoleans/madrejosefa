@@ -17,7 +17,6 @@ use App\Models\SituacionProfesionalPersona;
 
 class PersonasComponent extends Component
 {
-
     use WithFileUploads;
 
     public $crearParentescoModal = false;
@@ -29,14 +28,11 @@ class PersonasComponent extends Component
     public $arrayAnexo = []; 
     public $parentesco;
 
-    // public $personas = [];
-
     public $anexo;
 
     public $situacion_morbida,$situacion_social,$situacion_profesional;
 
     public $nombres,$apellido_materno,$apellido_paterno,$nro_documento,$direccion,$estado_civil,$fecha_nac,$nivel_instruccion,$pais_origen,$observaciones,$tipo_documento;
-    
     
     public function render()
     {
@@ -55,7 +51,6 @@ class PersonasComponent extends Component
 
     public function userName($id)
     {
-        //dd($this->user);
         return Personas::findOrfail($id)->nombres;
     }
 
@@ -66,17 +61,16 @@ class PersonasComponent extends Component
             return $this->addError('userError', 'No puede dejar el campo de persona vacío.');
         }
         
-         if(in_array($this->user, array_column($this->arrayParentesco, 'user')))
-         {
-            return $this->addError('userError', 'Ya esta persona tiene un parentesco.');
-         }
+        if(in_array($this->user, array_column($this->arrayParentesco, 'user')))
+        {
+        return $this->addError('userError', 'Ya esta persona tiene un parentesco.');
+        }
         $i = $this->counter + 1;
         $this->counter = $i;
         array_push($this->arrayParentesco, ['parentesco' => $this->parentesco , 'user' => $this->user,'name' => $this->userName($this->user)]);
         $this->reset(['parentesco','user']);
         $this->dispatchBrowserEvent('reset-user', ['value' => '']);
         $this->crearParentescoModal = false;
-        // dd($this->arrayParentesco);
     }
     
     /**
@@ -138,17 +132,6 @@ class PersonasComponent extends Component
             'observaciones' => $this->observaciones
         ]);
         
-        // if($this->parentesco != null){
-        //     foreach($this->parentesco as $p)
-        //     {
-        //         Parentesco::create([
-        //             'persona_id' => $persona->id,
-        //             'user_id' => $p['user'],
-        //             'parentesco' => $p['parentesco'],
-        //         ]);
-        //     }
-        // }
-
         if(count($this->arrayParentesco) > 0){
             foreach($this->arrayParentesco as $p)
             {
@@ -210,9 +193,7 @@ class PersonasComponent extends Component
 
     public function modalCreate()
     {
-        // $this->personas = Personas::where('status',1)->get()->toArray();
         $this->crearParentescoModal = true;
     }
-
 
 }
