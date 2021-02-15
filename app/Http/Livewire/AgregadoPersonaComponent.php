@@ -28,7 +28,6 @@ class AgregadoPersonaComponent extends Component
     public $parentescos;
     public $parentesco;
     public $persona;
-    public $personas = [];
     public $user;
 
     public $foto,$nombre,$descripcion,$fecha_exp;
@@ -39,7 +38,6 @@ class AgregadoPersonaComponent extends Component
     {
         $this->persona = $id;
         $this->parentescos = $id->parentescos;
-        
     }
 
     public function render()
@@ -48,6 +46,7 @@ class AgregadoPersonaComponent extends Component
             'situacion_m' => SituacionMorbida::where('status' , 1)->get(),
             'situacion_s' => SituacionSocial::where('status' , 1)->get(),
             'situacion_p' => SituacionProfesional::where('status' , 1)->get(),
+            'personas' => Personas::where('status',1)->where('id','!=',$this->persona->id)->get()
         ]);
     }
 

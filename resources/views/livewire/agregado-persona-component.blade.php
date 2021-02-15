@@ -91,6 +91,7 @@
                         <div class="flex flex-col justify-center items-center p-2">
                             <p class="text-lg font-extrabold text-gray-700 text-center">{{ $p->nombre }} </p>
                             <p class="text-md font-bold text-gray-700 text-center">{{ $p->fecha_exp }} </p>
+                            <img src="{{ asset('storage/'.$p->foto) }}" alt="{{ $p->nombre }}" class="h-32 w-32">
                         </div>
                         <div class="flex justify-end items-center gap-2 p-2">
                             <x-jet-button type="button" class="bg-red-500 p-2 rounded hover:bg-red-700" wire:click="deleteAnexo({{ $p->id }})">Eliminar</x-jet-button>
@@ -163,15 +164,14 @@
         <x-slot name="content">
             <form wire:submit.prevent="agregarParentescoForm">
                 <div class="grid grid-cols-6 gap-6">
-                    <div class="col-span-6 sm:col-span-6">
+                    <div class="col-span-6" wire:ignore>
                         <x-jet-label value="{{ __('Persona') }}" />
-                            <select required wire:model="user" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                            <select  style="width : 100% !important; padding" class="select2 mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
                                 <option value="">Seleccione...</option>
                                 @foreach($personas as $p)
                                     <option value="{{ $p->id }}">{{ $p->nombres }}</option>
                                 @endforeach
                             </select>
-                        <x-jet-input-error for="parentesco" class="mt-2" />
                     </div>
                     <div class="col-span-6 sm:col-span-6">
                         <x-jet-label value="{{ __('Parentesco') }}" />
@@ -350,5 +350,17 @@
         </x-slot>
     </x-jet-dialog-modal>
 </div>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        @this.set('user', '');
+        $('.select2').select2();
+        $('.select2').on('change', function (e) {
+            @this.set('user', e.target.value);
+        });
+    });
+</script>
 
 
