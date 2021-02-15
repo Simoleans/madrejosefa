@@ -169,7 +169,7 @@
                             <select  style="width : 100% !important; padding" class="select2 mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
                                 <option value="">Seleccione...</option>
                                 @foreach($personas as $p)
-                                    <option value="{{ $p->id }}">{{ $p->nombres }}</option>
+                                    <option value="{{ $p->id }}">{{ $p->nombres }} | {{ $p->nro_documento }}</option>
                                 @endforeach
                             </select>
                     </div>

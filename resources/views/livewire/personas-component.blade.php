@@ -175,7 +175,7 @@
                         </div>
                         <div class="col-span-5 sm:col-span-5" >
                             <x-jet-label required value="{{ __('Fecha de Exp.') }}" />
-                            <x-jet-input type="date" max="{{  \Carbon\Carbon::today()->format('Y-m-d') }}" class="mt-1 block w-full" wire:model.defer="anexo.{{ $it }}.fecha_exp"/>
+                            <x-jet-input type="date" class="mt-1 block w-full" wire:model.defer="anexo.{{ $it }}.fecha_exp"/>
                             <x-jet-input-error for="anexo.{{ $it }}.fecha_exp" class="mt-2" />
                         </div>
                         <div class="col-span-5 sm:col-span-5">
@@ -219,7 +219,7 @@
                             <select  style="width : 100% !important; padding" class="select2 mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
                                 <option value="">Seleccione...</option>
                                 @foreach($personas as $p)
-                                    <option value="{{ $p->id }}">{{ $p->nombres }}</option>
+                                    <option value="{{ $p->id }}">{{ $p->nombres }} | {{ $p->nro_documento }}</option>
                                 @endforeach
                             </select>
                     </div>

@@ -104,6 +104,7 @@ class PersonasComponent extends Component
 
     public function storePersona()
     {
+        //dd($this->anexo);
         $this->validate([
             'parentesco.*.user' => 'required',
             'parentesco.*.parentesco' => 'required',
@@ -181,7 +182,7 @@ class PersonasComponent extends Component
                     'foto' => $a['foto']->store('personas/anexos', 'public'),
                     'descripcion' => $a['descripcion'] ?? '',
                     'nombre' => $a['nombre'] ?? '',
-                    'fecha_exp' => $a['fecha_exp'] ?? ''
+                    'fecha_exp' => $a['fecha_exp'] ?? NULL
                 ]);
             }
         }
