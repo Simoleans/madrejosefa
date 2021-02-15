@@ -5,6 +5,8 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\Personas;
 use Livewire\WithPagination;
+use App\Exports\PersonasExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class IndexPersonasComponent extends Component
 {
@@ -81,5 +83,10 @@ class IndexPersonasComponent extends Component
 
     public function agregados($id){
         return redirect()->route('personas.agregado',$id);
+    }
+
+    public function export() 
+    {
+        return Excel::download(new PersonasExport, 'personas.xlsx');
     }
 }
