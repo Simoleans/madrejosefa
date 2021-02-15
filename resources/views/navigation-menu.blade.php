@@ -21,22 +21,23 @@
                         {{ __('Personas') }}
                     </x-jet-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('situacion-morbida') }}" :active="request()->routeIs('situacion-morbida')">
-                        {{ __('Situacion Morbida') }}
-                    </x-jet-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('situacion-profesional') }}" :active="request()->routeIs('situacion-profesional')">
-                        {{ __('Situacion Profesional') }}
-                    </x-jet-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('situacion-social') }}" :active="request()->routeIs('situacion-social')">
-                        {{ __('Situacion Social') }}
-                    </x-jet-nav-link>
-                </div>
-                
+                @if(auth()->user()->cargo == 0)
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('situacion-morbida') }}" :active="request()->routeIs('situacion-morbida')">
+                            {{ __('Situacion Morbida') }}
+                        </x-jet-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('situacion-profesional') }}" :active="request()->routeIs('situacion-profesional')">
+                            {{ __('Situacion Profesional') }}
+                        </x-jet-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-jet-nav-link href="{{ route('situacion-social') }}" :active="request()->routeIs('situacion-social')">
+                            {{ __('Situacion Social') }}
+                        </x-jet-nav-link>
+                    </div>
+                @endif
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -120,31 +121,31 @@
                             <x-jet-dropdown-link href="{{ route('profile.show') }}">
                                 {{ __('Perfil') }}
                             </x-jet-dropdown-link>
-
-                            <x-jet-dropdown-link href="{{ route('configuracion') }}">
-                                {{ __('Configuración') }}
-                            </x-jet-dropdown-link>
-
-                            <div class="border-t border-gray-100"></div>
-
-                            <div class="block px-4 py-2 text-xs text-gray-400">
-                                {{ __('Usuarios') }}
-                            </div>
-
-                            <x-jet-dropdown-link href="{{ route('usuarios.index') }}">
-                                {{ __('Ver Usuarios') }}
-                            </x-jet-dropdown-link>
-
-                            <x-jet-dropdown-link href="{{ route('usuarios.crear') }}">
-                                {{ __('Crear Usuario') }}
-                            </x-jet-dropdown-link>
-
-                            @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                                <x-jet-dropdown-link href="{{ route('api-tokens.index') }}">
-                                    {{ __('API Tokens') }}
+                            @if(auth()->user()->cargo == 0)
+                                <x-jet-dropdown-link href="{{ route('configuracion') }}">
+                                    {{ __('Configuración') }}
                                 </x-jet-dropdown-link>
-                            @endif
 
+                                <div class="border-t border-gray-100"></div>
+
+                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                    {{ __('Usuarios') }}
+                                </div>
+
+                                <x-jet-dropdown-link href="{{ route('usuarios.index') }}">
+                                    {{ __('Ver Usuarios') }}
+                                </x-jet-dropdown-link>
+
+                                <x-jet-dropdown-link href="{{ route('usuarios.crear') }}">
+                                    {{ __('Crear Usuario') }}
+                                </x-jet-dropdown-link>
+
+                                @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
+                                    <x-jet-dropdown-link href="{{ route('api-tokens.index') }}">
+                                        {{ __('API Tokens') }}
+                                    </x-jet-dropdown-link>
+                                @endif
+                            @endif
                             <div class="border-t border-gray-100"></div>
 
                             <!-- Authentication -->
@@ -177,9 +178,33 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-jet-responsive-nav-link>
+            <div class=" space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                    {{ __('Inicio') }}
+                </x-jet-responsive-nav-link>
+            </div>
+            <div class=" space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <x-jet-responsive-nav-link href="{{ route('personas.index') }}" :active="request()->routeIs('personas.*')">
+                    {{ __('Personas') }}
+                </x-jet-responsive-nav-link>
+            </div>
+            @if(auth()->user()->cargo == 0)
+                <div class=" space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-responsive-nav-link href="{{ route('situacion-morbida') }}" :active="request()->routeIs('situacion-morbida')">
+                        {{ __('Situacion Morbida') }}
+                    </x-jet-responsive-nav-link>
+                </div>
+                <div class=" space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-responsive-nav-link href="{{ route('situacion-profesional') }}" :active="request()->routeIs('situacion-profesional')">
+                        {{ __('Situacion Profesional') }}
+                    </x-jet-responsive-nav-link>
+                </div>
+                <div class=" space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-jet-responsive-nav-link href="{{ route('situacion-social') }}" :active="request()->routeIs('situacion-social')">
+                        {{ __('Situacion Social') }}
+                    </x-jet-responsive-nav-link>
+                </div>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
@@ -200,7 +225,7 @@
             <div class="mt-3 space-y-1">
                 <!-- Account Management -->
                 <x-jet-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
-                    {{ __('Profile') }}
+                    {{ __('Perfil') }}
                 </x-jet-responsive-nav-link>
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
@@ -216,7 +241,7 @@
                     <x-jet-responsive-nav-link href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                     this.closest('form').submit();">
-                        {{ __('Logout') }}
+                        {{ __('Salir') }}
                     </x-jet-responsive-nav-link>
                 </form>
 

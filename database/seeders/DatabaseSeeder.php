@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => Hash::make('12345678'),
             'cargo' => 0,
+            'nro_documento' => 123456,
+            'direccion' => 'Pais direccion'
         ]);
     }
 }

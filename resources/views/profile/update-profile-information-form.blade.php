@@ -1,10 +1,10 @@
 <x-jet-form-section submit="updateProfileInformation">
     <x-slot name="title">
-        {{ __('Profile Information') }}
+        {{ __('Información de tu Perfil') }}
     </x-slot>
 
     <x-slot name="description">
-        {{ __('Update your account\'s profile information and email address.') }}
+        {{ __('Actualiza tus datos.') }}
     </x-slot>
 
     <x-slot name="form">
@@ -34,7 +34,7 @@
                 <!-- New Profile Photo Preview -->
                 <div class="mt-2" x-show="photoPreview">
                     <span class="block rounded-full w-20 h-20"
-                          x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'">
+                        x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'">
                     </span>
                 </div>
 
@@ -65,15 +65,33 @@
             <x-jet-input id="email" type="email" class="mt-1 block w-full" wire:model.defer="state.email" />
             <x-jet-input-error for="email" class="mt-2" />
         </div>
+
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label for="direccion" value="{{ __('Direccion') }}" />
+            <x-jet-input id="direccion" type="text" class="mt-1 block w-full" wire:model.defer="state.direccion" autocomplete="direccion" />
+            <x-jet-input-error for="direccion" class="mt-2" />
+        </div>
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label for="nro_documento" value="{{ __('Nro. Documento') }}" />
+            <x-jet-input id="nro_documento" type="text" class="mt-1 block w-full" wire:model.defer="state.nro_documento" autocomplete="nro_documento" />
+            <x-jet-input-error for="nro_documento" class="mt-2" />
+        </div>
+        <hr class="col-span-6">
+        <p class="font-bold text-md col-span-6">Si desea modificar su firma actual, seleccione una imagen.</p>
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label for="firma" value="{{ __('Firma') }}" />
+            <x-jet-input id="firma" type="file" class="mt-1 block w-full" wire:model="state.firma" autocomplete="firma" />
+            <x-jet-input-error for="firma" class="mt-2" />
+        </div>
     </x-slot>
 
     <x-slot name="actions">
         <x-jet-action-message class="mr-3" on="saved">
-            {{ __('Saved.') }}
+            {{ __('Perfil Editado.') }}
         </x-jet-action-message>
 
         <x-jet-button wire:loading.attr="disabled" wire:target="photo">
-            {{ __('Save') }}
+            {{ __('Editar') }}
         </x-jet-button>
     </x-slot>
 </x-jet-form-section>
