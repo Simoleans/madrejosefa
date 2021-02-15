@@ -46,7 +46,7 @@ class EditarPersonaComponent extends Component
     public function render()
     {
         return view('livewire.editar-persona-component',[
-             'situacion_m' => SituacionMorbida::where('status' , 1)->get(),
+            'situacion_m' => SituacionMorbida::where('status' , 1)->get(),
             'situacion_s' => SituacionSocial::where('status' , 1)->get(),
             'situacion_p' => SituacionProfesional::where('status' , 1)->get(),
         ]);
@@ -55,6 +55,11 @@ class EditarPersonaComponent extends Component
     public function calculateEdad()
     {
         $this->edad = Carbon::parse($this->fecha_nac)->age;
+    }
+
+    public function editarPersona()
+    {
+        dd("yes");
     }
 
     

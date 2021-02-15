@@ -1,5 +1,5 @@
 <div>
-    <x-jet-form-section submit="storePersona" class="p-6">
+    <x-jet-form-section submit="editarPersona" class="p-6">
         <x-slot name="title">
             {{ __('Crear Persona') }}
         </x-slot>
@@ -90,83 +90,7 @@
                 <x-jet-input-error for="pais_origen" class="mt-2" />
             </div>
             <hr class="col-span-6 sm:col-span-6">
-            @foreach($parentescos as $p)
-                <div class="col-span-6 sm:col-span-2">
-                    <div class="bg-gray-300 shadow-md rounded-md">
-                        <div class="flex flex-col justify-center items-center p-2">
-                            <p class="text-lg font-extrabold text-gray-700 text-center">{{ $p->persona->nombres }} </p>
-                            <p class="text-md font-bold text-gray-700">{{ $p->parentesco }}</p>
-                        </div>
-                        <div class="flex justify-end items-center gap-2 p-2">
-                            <x-jet-button type="button" class="bg-green-500 p-2 rounded hover:bg-green-700" wire:click="editParentesco({{ $p->id }})">Editar</x-jet-button>
-                            <x-jet-button class="bg-red-500 p-2 rounded hover:bg-red-700" wire:click="deleteParentesco({{ $p->id }})">Eliminar</x-jet-button>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-            <div class="col-span-6 sm:col-span-6">
-                <button  wire:click="addParentesco"  type="button" class="block text-center w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-7">
-                    Agregar Parentesco
-                </button>
-            </div>
-            <hr class="col-span-6 sm:col-span-6">
-            @foreach($situacion_m as $p)
-                <div class="col-span-6 sm:col-span-2">
-                    <div class="bg-gray-300 shadow-md rounded-md">
-                        <div class="flex flex-col justify-center items-center p-2">
-                            <p class="text-lg font-extrabold text-gray-700 text-center">{{ $p->nombre }} </p>
-                        </div>
-                        <div class="flex justify-end items-center gap-2 p-2">
-                            <x-jet-button class="bg-red-500 p-2 rounded hover:bg-red-700" wire:click="confirmDelete({{ $p->id }})">Eliminar</x-jet-button>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-            <div class="col-span-6 sm:col-span-6">
-                <button  wire:click="addParentesco"  type="button" class="block text-center w-full bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mt-7">
-                    Agregar Situación Morbida
-                </button>
-            </div>
-            <hr class="col-span-6 sm:col-span-6">
-            @foreach($situacion_p as $p)
-                <div class="col-span-6 sm:col-span-2">
-                    <div class="bg-gray-300 shadow-md rounded-md">
-                        <div class="flex flex-col justify-center items-center p-2">
-                            <p class="text-lg font-extrabold text-gray-700 text-center">{{ $p->nombre }} </p>
-                        </div>
-                        <div class="flex justify-end items-center gap-2 p-2">
-                            <x-jet-button class="bg-red-500 p-2 rounded hover:bg-red-700" wire:click="confirmDelete({{ $p->id }})">Eliminar</x-jet-button>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-            <div class="col-span-6 sm:col-span-6">
-                <button  wire:click="addParentesco"  type="button" class="block text-center w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-7">
-                    Agregar Situación Profesional
-                </button>
-            </div>
-            <hr class="col-span-6 sm:col-span-6">
-            @foreach($situacion_s as $p)
-                <div class="col-span-6 sm:col-span-2">
-                    <div class="bg-gray-300 shadow-md rounded-md">
-                        <div class="flex flex-col justify-center items-center p-2">
-                            <p class="text-lg font-extrabold text-gray-700 text-center">{{ $p->nombre }} </p>
-                        </div>
-                        <div class="flex justify-end items-center gap-2 p-2">
-                            <x-jet-button class="bg-red-500 p-2 rounded hover:bg-red-700" wire:click="confirmDelete({{ $p->id }})">Eliminar</x-jet-button>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-            <div class="col-span-6 sm:col-span-6">
-                <button  wire:click="addParentesco"  type="button" class="block text-center w-full bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mt-7">
-                    Agregar Situación Social
-                </button>
-            </div>
-            <hr class="col-span-6 sm:col-span-6">
             
-            
-            <hr class="col-span-6 sm:col-span-6">
             {{-- <div class="col-span-6">
                 @foreach ($arrayAnexo as $it => $key)
                     <div class="grid grid-cols-5 gap-4" wire:key="anexo-{{ $key }}">
@@ -198,11 +122,11 @@
                     <hr class="col-span-5 sm:col-span-5 mt-2 mb-2">
                 @endforeach
             </div> --}}
-            <div class="col-span-6 sm:col-span-6">
+            {{-- <div class="col-span-6 sm:col-span-6">
                 <button  wire:click="addAnexo"  type="button" class="block text-center w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-7">
                     Agregar Anexo
                 </button>
-            </div>
+            </div> --}}
         </x-slot>
 
         <x-slot name="actions">
@@ -211,7 +135,7 @@
             </x-jet-action-message>
 
             <x-jet-button>
-                {{ __('Guardar') }}
+                {{ __('Editar') }}
             </x-jet-button>
         </x-slot>
 

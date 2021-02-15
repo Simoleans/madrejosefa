@@ -97,7 +97,9 @@
                         <x-jet-label value="{{ __('Persona') }}" />
                         <select required wire:model.defer="parentesco.{{ $item }}.user" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
                             <option value="">Seleccione...</option>
-                            <option value="1">Franco</option>
+                            @foreach($personas as $p)
+                                <option value="{{ $p->id }}">{{ $p->nombres }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-span-6 sm:col-span-2">

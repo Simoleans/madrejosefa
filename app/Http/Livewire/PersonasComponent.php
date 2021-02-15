@@ -39,7 +39,8 @@ class PersonasComponent extends Component
         return view('livewire.personas-component',[
             'situacion_m' => SituacionMorbida::where('status' , 1)->get(),
             'situacion_s' => SituacionSocial::where('status' , 1)->get(),
-            'situacion_p' => SituacionProfesional::where('status' , 1)->get()
+            'situacion_p' => SituacionProfesional::where('status' , 1)->get(),
+            'personas' => Personas::where('status',1)->get()
         ]);
     }
 
@@ -164,8 +165,8 @@ class PersonasComponent extends Component
             }
         }
 
-        flash('Persona Registrado correctamente!')->success();
-        dd("si!");
+        flash('Persona Registrada correctamente!')->success();
+        return redirect()->route('personas.index');
         
     }
 }
