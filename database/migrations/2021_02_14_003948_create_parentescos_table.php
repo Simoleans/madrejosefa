@@ -15,7 +15,7 @@ class CreateParentescosTable extends Migration
     {
         Schema::create('parentescos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('user_id')->constrained('personas');
             $table->foreignId('persona_id')->constrained('personas');
             $table->string('parentesco');
             $table->timestamps();

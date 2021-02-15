@@ -50,4 +50,13 @@ class IndexPersonasComponent extends Component
             return redirect()->route('personas.index');
         }
     }
+
+    public function editar($id)
+    {
+        return redirect()->route('personas.editar',$id);
+    }
+
+    public function agregados($id){
+        return redirect()->route('personas.agregado',$id);
+    }
 }

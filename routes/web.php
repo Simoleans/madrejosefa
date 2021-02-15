@@ -6,7 +6,9 @@ use App\Http\Livewire\PersonasComponent;
 use App\Http\Livewire\DashboardComponent;
 use App\Http\Livewire\IndexUserComponent;
 use App\Http\Livewire\ConfiguracionComponent;
+use App\Http\Livewire\EditarPersonaComponent;
 use App\Http\Livewire\IndexPersonasComponent;
+use App\Http\Livewire\AgregadoPersonaComponent;
 use App\Http\Livewire\SituacionSocialComponent;
 use App\Http\Livewire\SituacionMorbidaComponent;
 use App\Http\Livewire\SituacionProfesionalComponent;
@@ -33,6 +35,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group( function () {
     Route::get('usuarios',IndexUserComponent::class)->name('usuarios.index');
     Route::get('crear-personas',PersonasComponent::class)->name('personas.crear');
     Route::get('personas',IndexPersonasComponent::class)->name('personas.index');
+    Route::get('editar/persona/{id}',EditarPersonaComponent::class)->name('personas.editar');
+    Route::get('editar/agregado/persona/{id}',AgregadoPersonaComponent::class)->name('personas.agregado');
     Route::get('configuracion',ConfiguracionComponent::class)->name('configuracion');
 
     //mini crud

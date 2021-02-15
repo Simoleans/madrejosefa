@@ -10,4 +10,9 @@ class Parentesco extends Model
     use HasFactory;
 
     public $fillable = ['user_id','persona_id','parentesco'];
+
+    public function persona()
+    {
+        return $this->belongsTo(Personas::class);
+    }
 }

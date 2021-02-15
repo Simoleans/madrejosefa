@@ -6,7 +6,7 @@
     </div>
     <hr class="mb-4">
     <x-jet-label for="search" value="{{ __('Buscar') }}" />
-    <x-jet-input type="text" class="mt-1 block w-full" wire:model="search" placeholder="Nombre|Email"/>
+    <x-jet-input type="text" class="mt-1 block w-full" wire:model="search" placeholder="Nombre | Email"/>
     <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-3 mt-6 mb-6">
         
         @foreach($users as $u)

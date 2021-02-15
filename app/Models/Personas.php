@@ -23,7 +23,27 @@ class Personas extends Model
     ];
 
     public function getFullNameAttribute()
-{
-    return "{$this->nombres} {$this->apellido_paterno} {$this->apellido_materno}";
-}
+    {
+        return "{$this->nombres} {$this->apellido_paterno} {$this->apellido_materno}";
+    }
+
+    public function parentescos()
+    {
+        return $this->hasMany(Parentesco::class,'persona_id');
+    }
+
+    public function s_morbida()
+    {
+        return $this->hasMany(SituacionMorbidaPersona::class,'persona_id');
+    }
+
+    public function s_profesional()
+    {
+        return $this->hasMany(SituacionProfesionalPersona::class,'persona_id');
+    }
+
+    public function s_social()
+    {
+        return $this->hasMany(SituacionSocialPersona::class,'persona_id');
+    }
 }

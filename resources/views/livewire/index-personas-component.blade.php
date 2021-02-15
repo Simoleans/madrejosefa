@@ -6,25 +6,25 @@
     </div>
     <hr class="mb-4">
     <x-jet-label for="search" value="{{ __('Buscar') }}" />
-    <x-jet-input type="text" class="mt-1 block w-full" wire:model="search" placeholder="Nombre|Nro. Documento"/>
+    <x-jet-input type="text" class="mt-1 block w-full" wire:model="search" placeholder="Nombre | Nro. Documento"/>
     <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-3 mt-6 mb-6">
-        
         @foreach($personas as $p)
-        <div class="bg-gray-300 shadow-md rounded-md">
-            <div class="flex flex-col justify-center items-center p-2">
-                <p class="textlgl font-extrabold text-gray-700 text-center">{{ $p->nombres }} </p>
-                <p class="text-md font-bold text-gray-700">{{ $p->pais_origen }}</p>
-                <p class="text-md font-medium text-gray-700">{{ $p->nro_documento}}</p>
-                <p class="text-md font-medium {{ $p->status == 1 ? 'text-green-500' : 'text-red-500' }}">{{ $p->status == 1 ? 'Activo' : 'Inactivo'}}</p>
-                {{-- <img src="{{asset('storage/'.$p->firma)}}" alt="" class="w-32 h-32"> --}}
+            <div class="bg-gray-300 shadow-md rounded-md">
+                <div class="flex flex-col justify-center items-center p-2">
+                    <p class="text-lg font-extrabold text-gray-700 text-center">{{ $p->nombres }} </p>
+                    <p class="text-md font-bold text-gray-700">{{ $p->pais_origen }}</p>
+                    <p class="text-md font-medium text-gray-700">{{ $p->nro_documento}}</p>
+                    <p class="text-md font-medium {{ $p->status == 1 ? 'text-green-500' : 'text-red-500' }}">{{ $p->status == 1 ? 'Activo' : 'Inactivo'}}</p>
+                </div>
+                <div class="flex justify-center gap-2 p-2">
+                    <x-jet-button class="bg-green-500 p-2 rounded-md hover:bg-green-700" wire:click="editar({{ $p->id }})">Editar</x-jet-button>
+                    <x-jet-button class="bg-red-500 p-2 rounded hover:bg-red-700" wire:click="confirmDelete({{ $p->id }})">Eliminar</x-jet-button>
+                </div>
+                <div class="flex flex-col items-center p-2">
+                    <x-jet-button class="bg-yellow-500 p-2 rounded-md hover:bg-yellow-700 text-center" wire:click="agregados({{ $p->id }})">Editar Agregados </x-jet-button>
+                </div>
             </div>
-            <div class="flex justify-end items-center gap-2 p-2">
-                <x-jet-button class="bg-green-500 p-2 rounded-md hover:bg-green-700" wire:click="modalEditar({{ $p->id }})">Editar</x-jet-button>
-                <x-jet-button class="bg-red-500 p-2 rounded hover:bg-red-700" wire:click="confirmDelete({{ $p->id }})">Eliminar</x-jet-button>
-            </div>
-        </div>
         @endforeach
-        
     </div>
     {{ $personas->links() }}
     <x-jet-dialog-modal wire:model="editarUser">
