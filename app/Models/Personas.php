@@ -27,6 +27,7 @@ class Personas extends Model
     'ob_situacion_p'
     ];
 
+
     public function getFullNameAttribute()
     {
         return "{$this->nombres} {$this->apellido_paterno} {$this->apellido_materno}";
