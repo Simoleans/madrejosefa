@@ -15,7 +15,7 @@ class EditarPersonaComponent extends Component
     public $persona;
     public $edad = 0;
 
-    public $nombres,$apellido_materno,$apellido_paterno,$nro_documento,$direccion,$estado_civil,$fecha_nac,$nivel_instruccion,$pais_origen,$tipo_documento,$observaciones;
+    public $nombres,$apellido_materno,$apellido_paterno,$nro_documento,$direccion,$estado_civil,$fecha_nac,$nivel_instruccion,$pais_origen,$tipo_documento,$observaciones,$ob_situacion_m,$ob_situacion_p,$ob_situacion_s;
 
     public function mount(Personas $id)
     {
@@ -34,6 +34,9 @@ class EditarPersonaComponent extends Component
         $this->pais_origen = $id->pais_origen;
         $this->observaciones = $id->observaciones;
         $this->tipo_documento = $id->tipo_documento;
+        $this->ob_situacion_p = $id->ob_situacion_p;
+        $this->ob_situacion_m = $id->ob_situacion_m;
+        $this->ob_situacion_s = $id->ob_situacion_s;
 
     }
 
@@ -61,7 +64,10 @@ class EditarPersonaComponent extends Component
             'pais_origen' => $this->pais_origen,
             'nro_documento' => $this->nro_documento,
             'tipo_documento' => $this->tipo_documento,
-            'observaciones' => $this->observaciones
+            'observaciones' => $this->observaciones,
+            'ob_situacion_m' => $this->ob_situacion_m,
+            'ob_situacion_p' => $this->ob_situacion_p,
+            'ob_situacion_s' => $this->ob_situacion_s,
         ]);
 
         flash('Persona Editada correctamente!')->success();

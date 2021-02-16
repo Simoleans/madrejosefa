@@ -32,7 +32,7 @@ class PersonasComponent extends Component
 
     public $situacion_morbida,$situacion_social,$situacion_profesional;
 
-    public $nombres,$apellido_materno,$apellido_paterno,$nro_documento,$direccion,$estado_civil,$fecha_nac,$nivel_instruccion,$pais_origen,$observaciones,$tipo_documento;
+    public $nombres,$apellido_materno,$apellido_paterno,$nro_documento,$direccion,$estado_civil,$fecha_nac,$nivel_instruccion,$pais_origen,$observaciones,$tipo_documento,$ob_situacion_m,$ob_situacion_p,$ob_situacion_s;
     
     public function render()
     {
@@ -109,15 +109,10 @@ class PersonasComponent extends Component
             'parentesco.*.user' => 'required',
             'parentesco.*.parentesco' => 'required',
             'tipo_documento' => 'required',
-            'nro_documento' => 'required|unique:personas',
+            'nro_documento' => 'unique:personas',
             'nombres' => 'required',
             'direccion' => 'required',
             'pais_origen' => 'required'
-        ],
-        [
-            'parentesco.*.user.required' => 'El usuario no puede quedar vacio.',
-            'parentesco.*.parentesco.required' => 'El parentesco no puede quedar vacia.',
-            'parentesco.max' => 'Solo se permiten 5 parentescos.'
         ]);
         $persona = Personas::create([
             'nombres' => $this->nombres,
@@ -130,7 +125,11 @@ class PersonasComponent extends Component
             'pais_origen' => $this->pais_origen,
             'nro_documento' => $this->nro_documento,
             'tipo_documento' => $this->tipo_documento,
-            'observaciones' => $this->observaciones
+            'observaciones' => $this->observaciones,
+            'ob_situacion_m' => $this->ob_situacion_m,
+            'ob_situacion_p' => $this->ob_situacion_p,
+            'ob_situacion_s' => $this->ob_situacion_s,
+
         ]);
         
         if(count($this->arrayParentesco) > 0){

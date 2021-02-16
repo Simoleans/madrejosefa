@@ -17,7 +17,7 @@
                 <div class="flex flex-col justify-center items-center p-2">
                     <p class="text-lg font-extrabold text-gray-700 text-center">{{ $p->nombres }} </p>
                     <p class="text-md font-bold text-gray-700">{{ $p->pais_origen }}</p>
-                    <p class="text-md font-medium text-gray-700">{{ $p->nro_documento}}</p>
+                    <p class="text-md font-medium text-gray-700">{{ $p->nro_documento ?? 'Sin documento'}}</p>
                     <p class="text-md font-medium {{ $p->status == 1 ? 'text-green-500' : 'text-red-500' }}">{{ $p->status == 1 ? 'Activo' : 'Inactivo'}}</p>
                 </div>
                 <div class="flex justify-center gap-2 p-2">

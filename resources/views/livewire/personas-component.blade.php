@@ -16,12 +16,13 @@
                     <option value="">Seleccione...</option>
                     <option value="Pasaporte">Pasaporte</option>
                     <option value="Cédula">Cédula</option>
+                    <option value="Sin documento">Sin documento</option>
                 </select>
                 <x-jet-input-error for="tipo_documento" class="mt-2" />
             </div>
             <div class="col-span-6 sm:col-span-4">
                 <x-jet-label value="{{ __('Nro. Documento') }}" />
-                <x-jet-input required type="text" class="mt-1 block w-full" wire:model.defer="nro_documento" autocomplete="on" />
+                <x-jet-input type="text" class="mt-1 block w-full" wire:model.defer="nro_documento" autocomplete="on" />
                 <x-jet-input-error for="nro_documento" class="mt-2" />
             </div>
             <div class="col-span-6 sm:col-span-6">
@@ -149,6 +150,22 @@
                 </select>
                 <x-jet-input-error for="situacion_social" class="mt-2" />
             </div>
+
+            <div class="col-span-6 sm:col-span-2">
+                <x-jet-label value="{{ __('Observación de Situacion Morbida') }}" />
+                <textarea rows="6" type="text"class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" wire:model.defer="ob_situacion_m"></textarea>
+            </div>
+            <div class="col-span-6 sm:col-span-2">
+                <x-jet-label value="{{ __('Observación de Situacion Profesional') }}" />
+                <textarea rows="6" type="text"class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" wire:model.defer="ob_situacion_p"></textarea>
+            </div>
+            <div class="col-span-6 sm:col-span-2">
+                <x-jet-label value="{{ __('Observación de Situacion Social') }}" />
+                <textarea rows="6" type="text"class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" wire:model.defer="ob_situacion_s"></textarea>
+            </div>
+
+            <hr class="col-span-6 sm:col-span-6">
+
             <div class="col-span-6 sm:col-span-6">
                 <x-jet-label value="{{ __('Observaciones') }}" />
                 <textarea rows="6" type="text"class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" wire:model.defer="observaciones"></textarea>

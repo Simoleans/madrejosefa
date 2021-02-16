@@ -21,7 +21,10 @@ class Personas extends Model
     'nro_documento',
     'status',
     'observaciones',
-    'tipo_documento'
+    'tipo_documento',
+    'ob_situacion_m',
+    'ob_situacion_s',
+    'ob_situacion_p'
     ];
 
     public function getFullNameAttribute()
