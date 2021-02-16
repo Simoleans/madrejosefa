@@ -29,6 +29,9 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+//PDF
+Route::get('pdf/persona/{id}',[PdfController::class,'persona'])->name('pdf.persona');
+
 Route::middleware(['auth:sanctum', 'verified'])->group( function () {
     // return view('dashboard');
     Route::get('/dashboard',DashboardComponent::class)->name('dashboard');
@@ -38,8 +41,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group( function () {
     Route::get('editar/persona/{id}',EditarPersonaComponent::class)->name('personas.editar');
     Route::get('editar/agregado/persona/{id}',AgregadoPersonaComponent::class)->name('personas.agregado');
 
-    //PDF
-    Route::get('pdf/persona/{id}',[PdfController::class,'persona'])->name('pdf.persona');
+    
 
 });
 
