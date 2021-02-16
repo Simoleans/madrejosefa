@@ -2,6 +2,7 @@
 
 use App\Http\Livewire\UserComponent;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PdfController;
 use App\Http\Livewire\PersonasComponent;
 use App\Http\Livewire\DashboardComponent;
 use App\Http\Livewire\IndexUserComponent;
@@ -36,6 +37,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group( function () {
     Route::get('personas',IndexPersonasComponent::class)->name('personas.index');
     Route::get('editar/persona/{id}',EditarPersonaComponent::class)->name('personas.editar');
     Route::get('editar/agregado/persona/{id}',AgregadoPersonaComponent::class)->name('personas.agregado');
+
+    //PDF
+    Route::get('pdf/persona/{id}',[PdfController::class,'persona'])->name('pdf.persona');
 
 });
 

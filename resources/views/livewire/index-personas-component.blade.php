@@ -30,6 +30,7 @@
                 </div>
                 <div class="flex flex-col items-center p-2">
                     <x-jet-button class="bg-yellow-500 p-2 rounded-md hover:bg-yellow-700 text-center" wire:click="agregados({{ $p->id }})">Editar Agregados </x-jet-button>
+                    {{-- <a class="inline-flex items-center px-4 py-2 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray disabled:opacity-25 transition ease-in-out duration-150 mb-2 bg-green-600 hover:bg-green-700" href="{{ route('pdf.persona',$p->id) }}" target="_blank">PDF </a> --}}
                 </div>
             </div>
         @endforeach

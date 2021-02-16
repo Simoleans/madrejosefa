@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Personas;
+use PDF;
 use Livewire\WithPagination;
 use App\Exports\PersonasExport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -89,4 +90,10 @@ class IndexPersonasComponent extends Component
     {
         return Excel::download(new PersonasExport, 'personas.xlsx');
     }
+
+    // public function pdf(){
+    //     // dd("khks");
+    //     $pdf = PDF::loadView('pdf.persona');
+    //     return $pdf->stream('persona.pdf');
+    // }
 }
