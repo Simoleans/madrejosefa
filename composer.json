@@ -22,7 +22,8 @@
         "laraveles/spanish": "^1.5",
         "livewire/livewire": "^2.0",
         "maatwebsite/excel": "^3.1",
-        "mattlibera/livewire-flash": "^0.5.0"
+        "mattlibera/livewire-flash": "^0.5.0",
+        "simplesoftwareio/simple-qrcode": "~2"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
