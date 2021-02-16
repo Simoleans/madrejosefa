@@ -8,36 +8,34 @@
     <title>Persona</title>
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <style>
-        header {
-            position: fixed;
-            top: 0cm;
-            left: 0cm;
-            right: 0cm;
-            height: 2cm;
-            /* background-color: #e81cd7; */
-            color: white;
-            text-align: center;
-            line-height: 30px;
+        
+        @media print {
+        .pagebreak {
+            clear: both;
+            page-break-after: always;
         }
+    }
     </style>
 </head>
 
 <body>
     <header>
-        <div class="container mx-auto p-12 ">
+        <div class="container mx-auto p-12">
             <div class="flex justify-between items-center">
-                <p class="font-extrabold text-xl text-black">
+                <p class="font-medium text-xl text-black">
                     {{ strtoupper(nombreFundacion()) }}
                 </p>
-                <div>
-                    {!! QrCode::size(100)->generate(Request::url()); !!}
-                </div>
             </div>
         </div>
     </header>
     <main>
-        <div class="container mx-auto py-24 px-16">
+        <div class="container mx-auto py-16 px-16">
             <p class="font-bold text-2xl text-center mb-4">Datos personales</p>
+            <div class="flex justify-end">
+                <div>
+                    {!! QrCode::size(100)->generate(route('pdf.persona',encrypt($persona->id))); !!}
+                </div>
+            </div>
             <div class="flex items-center gap-6">
                 <div class="flex-1">
                     <h2>Documento: <p class="text-md font-bold">{{ $persona->tipo_documento }} - {{ $persona->nro_documento ?? 'N/T' }}</p></h2>
@@ -95,6 +93,7 @@
                     <h2>Observaciones: <p class="text-md font-bold">{{ $persona->ob_situacion_s ?? 'N/T' }}</p></h2>
                 </div>
             </div>
+            <div class="pagebreak"> </div>
             <p class="font-bold text-2xl text-center mb-4 mt-2">Anexos</p>
             <div class="grid grid-cols-3 gap-4">
                 @forelse($persona->anexos as $a)
