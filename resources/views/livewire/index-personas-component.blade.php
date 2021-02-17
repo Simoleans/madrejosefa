@@ -35,7 +35,7 @@
                     </div>
                     <div class="flex flex-col items-center p-2">
                         <x-jet-button class="bg-yellow-500 p-2 rounded-md hover:bg-yellow-700 text-center" wire:click="agregados({{ $p->id }})">Editar Agregados </x-jet-button>
-                        <x-jet-button type="button" title="Imprimir" x-on:click="buttonPrint()" class="bg-red-500 p-2 mt-2 rounded-md hover:bg-red-700 text-center">
+                        <x-jet-button type="button" title="Imprimir" x-on:click="buttonPrint('{{ route('pdf.persona',encrypt($p->id)) }}')" class="bg-red-500 p-2 mt-2 rounded-md hover:bg-red-700 text-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clip-rule="evenodd" />
                             </svg>
@@ -90,8 +90,8 @@
     function data()
     {
         return {
-            buttonPrint() {
-                window.open("{{ route('pdf.persona',encrypt($p->id)) }}")
+            buttonPrint(url) {
+                window.open(url)
             }
         }
     }
