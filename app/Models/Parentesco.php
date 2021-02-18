@@ -9,7 +9,19 @@ class Parentesco extends Model
 {
     use HasFactory;
 
-    public $fillable = ['user_id','persona_id','parentesco'];
+    public $fillable = [
+        'nombres',
+        'apellido_materno',
+        'apellido_paterno',
+        'direccion',
+        'estado_civil',
+        'fecha_nac',
+        'nivel_instruccion',
+        'pais_origen',
+        'nro_documento',
+        'persona_id',
+        'parentesco'
+    ];
 
     public function persona()
     {

@@ -33,6 +33,8 @@ class PersonasComponent extends Component
     public $situacion_morbida,$situacion_social,$situacion_profesional;
 
     public $nombres,$apellido_materno,$apellido_paterno,$nro_documento,$direccion,$estado_civil,$fecha_nac,$nivel_instruccion,$pais_origen,$observaciones,$tipo_documento,$ob_situacion_m,$ob_situacion_p,$ob_situacion_s;
+
+    public $nombres_paren,$apellido_materno_paren,$apellido_paterno_paren,$nro_documento_paren,$direccion_paren,$estado_civil_paren,$fecha_nac_paren,$nivel_instruccion_paren,$pais_origen_paren,$tipo_documento_paren;
     
     public function render()
     {
@@ -49,17 +51,9 @@ class PersonasComponent extends Component
         $this->edad = Carbon::parse($this->fecha_nac)->age;
     }
 
-    public function userName($id)
-    {
-        return Personas::findOrfail($id)->nombres;
-    }
 
     public function addParentesco()
     {
-        if($this->user == '')
-        {
-            return $this->addError('userError', 'No puede dejar el campo de persona vacío.');
-        }
         
         if(in_array($this->user, array_column($this->arrayParentesco, 'user')))
         {
@@ -67,8 +61,20 @@ class PersonasComponent extends Component
         }
         $i = $this->counter + 1;
         $this->counter = $i;
-        array_push($this->arrayParentesco, ['parentesco' => $this->parentesco , 'user' => $this->user,'name' => $this->userName($this->user)]);
-        $this->reset(['parentesco','user']);
+        array_push($this->arrayParentesco, [
+             'parentesco' => $this->parentesco ,
+             'nombres' => $this->nombres_paren,
+             'apellido_materno' => $this->apellido_materno_paren,
+             'apellido_paterno' => $this->apellido_paterno_paren,
+             'direccion' => $this->direccion_paren,
+             'estado_civil' => $this->estado_civil_paren,
+             'fecha_nac' => $this->fecha_nac_paren,
+             'nivel_instruccion' => $this->nivel_instruccion_paren,
+             'pais_origen' => $this->pais_origen_paren,
+             'nro_documento' => $this->nro_documento_paren,
+             'tipo_documento' => $this->tipo_documento_paren,
+         ]);
+        $this->reset(['nombres_paren','parentesco','apellido_materno_paren','estado_civil_paren','apellido_paterno_paren','tipo_documento_paren','nro_documento_paren','nivel_instruccion_paren','pais_origen_paren','fecha_nac_paren']);
         $this->dispatchBrowserEvent('reset-user', ['value' => '']);
         $this->crearParentescoModal = false;
     }
@@ -104,7 +110,6 @@ class PersonasComponent extends Component
 
     public function storePersona()
     {
-        //dd($this->anexo);
         $this->validate([
             'parentesco.*.user' => 'required',
             'parentesco.*.parentesco' => 'required',
@@ -137,7 +142,15 @@ class PersonasComponent extends Component
             {
                 Parentesco::create([
                     'persona_id' => $persona->id,
-                    'user_id' => $p['user'],
+                    'nombres' => $p['nombres'],
+                    'apellido_materno' => $p['apellido_materno'],
+                    'apellido_paterno' => $p['apellido_paterno'],
+                    'direccion' => $p['direccion'],
+                    'estado_civil' => $p['estado_civil'],
+                    'fecha_nac' => $p['fecha_nac'],
+                    'nivel_instruccion' => $p['nivel_instruccion'],
+                    'pais_origen' => $p['pais_origen'],
+                    'nro_documento' => $p['nro_documento'],
                     'parentesco' => $p['parentesco'],
                 ]);
             }

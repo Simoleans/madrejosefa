@@ -15,11 +15,10 @@
                 <div class="col-span-6 sm:col-span-2">
                     <div class="bg-gray-300 shadow-md rounded-md">
                         <div class="flex flex-col justify-center items-center p-2">
-                            <p class="text-lg font-extrabold text-gray-700 text-center">{{ $p->user->nombres }} </p>
+                            <p class="text-lg font-extrabold text-gray-700 text-center">{{ $p->nombres }} </p>
                             <p class="text-md font-bold text-gray-700">{{ $p->parentesco }}</p>
                         </div>
                         <div class="flex justify-end items-center gap-2 p-2">
-                            {{-- <x-jet-button type="button" class="bg-green-500 p-2 rounded hover:bg-green-700" wire:click="editParentesco({{ $p->id }})">Editar</x-jet-button> --}}
                             <x-jet-button type="button" class="bg-red-500 p-2 rounded hover:bg-red-700" wire:click="deleteParentesco({{ $p->id }})">Eliminar</x-jet-button>
                         </div>
                     </div>
@@ -156,7 +155,7 @@
         </x-slot>
     </x-jet-dialog-modal> --}}
 
-    <x-jet-dialog-modal wire:model="crearParentescoModal">
+   {{--  <x-jet-dialog-modal wire:model="crearParentescoModal">
         <x-slot name="title">
             {{ __('Agregar Parentesco') }}
         </x-slot>
@@ -198,6 +197,131 @@
             </x-jet-secondary-button>
     
             <x-jet-button class="ml-2 bg-green-500" type="submit" wire:loading.attr="disabled">
+                {{ __('Agregar Parentesco') }}
+            </x-jet-button>
+        </form>
+        </x-slot>
+    </x-jet-dialog-modal> --}}
+
+    <x-jet-dialog-modal wire:model="crearParentescoModal">
+        <x-slot name="title">
+            {{ __('Agregar Parentesco') }}
+        </x-slot>
+    
+        <x-slot name="content">
+            <form wire:submit.prevent="agregarParentescoForm">
+                <div class="grid grid-cols-6 gap-6">
+                    <div class="col-span-6 sm:col-span-6">
+                        <x-jet-input-error for="userError" class="mt-2" />
+                    </div>
+                    <div class="col-span-6 sm:col-span-2">
+                <x-jet-label for="nivel_instruccion" value="{{ __('Tipo de Documento') }}" />
+                <select required wire:model.defer="tipo_documento_paren" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                    <option value="">Seleccione...</option>
+                    <option value="Pasaporte">Pasaporte</option>
+                    <option value="Cédula">Cédula</option>
+                    <option value="Sin documento">Sin documento</option>
+                </select>
+                <x-jet-input-error for="tipo_documento" class="mt-2" />
+            </div>
+            <div class="col-span-6 sm:col-span-4">
+                <x-jet-label value="{{ __('Nro. Documento') }}" />
+                <x-jet-input type="text" class="mt-1 block w-full" wire:model.defer="nro_documento_paren" autocomplete="on" />
+                <x-jet-input-error for="nro_documento" class="mt-2" />
+            </div>
+            <div class="col-span-6 sm:col-span-6">
+                <x-jet-label for="nombres" value="{{ __('Nombres') }}" />
+                <x-jet-input required type="text" id="nombres" class="mt-1 block w-full" wire:model.defer="nombres_paren" autocomplete="on" />
+                <x-jet-input-error for="nombres" class="mt-2" />
+            </div>
+            <div class="col-span-6 sm:col-span-3">
+                <x-jet-label value="{{ __('Apellido Paterno') }}" />
+                <x-jet-input type="text" class="mt-1 block w-full" wire:model.defer="apellido_paterno_paren" autocomplete="on" />
+                <x-jet-input-error for="apellido_paterno" class="mt-2" />
+            </div>
+            <div class="col-span-6 sm:col-span-3">
+                <x-jet-label value="{{ __('Apellido Materno') }}" />
+                <x-jet-input type="text" class="mt-1 block w-full" wire:model.defer="apellido_materno_paren" autocomplete="on" />
+                <x-jet-input-error for="apellido_materno" class="mt-2" />
+            </div>
+            <div class="col-span-6 sm:col-span-6">
+                <x-jet-label value="{{ __('Dirección') }}" />
+                <x-jet-input required type="text" class="mt-1 block w-full" wire:model.defer="direccion_paren" autocomplete="on" />
+                <x-jet-input-error for="direccion" class="mt-2" />
+            </div>
+            <div class="col-span-6 sm:col-span-2">
+                <x-jet-label  value="{{ __('Estado civil') }}" />
+                <select wire:model.defer="estado_civil_paren" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                    <option value="">Seleccione...</option>
+                    <option value="Soltero">Soltero</option>
+                    <option value="Casado">Casado</option>
+                </select>
+                <x-jet-input-error for="estado_civil" class="mt-2" />
+            </div>
+
+            <div class="col-span-6 sm:col-span-2">
+                <x-jet-label for="fecha_nacimiento" value="{{ __('Fecha de nacimiento') }}" />
+                <x-jet-input type="date" class="mt-1 block w-full" max="{{  \Carbon\Carbon::today()->format('Y-m-d') }}" wire:model="fecha_nac_paren"/>
+                <x-jet-input-error for="fecha_nac" class="mt-2" />
+            </div>
+            <div class="col-span-6 sm:col-span-6">
+                <x-jet-label for="nivel_instruccion" value="{{ __('Nivel de instrucción') }}" />
+                <select wire:model.defer="nivel_instruccion_paren" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                    <option value="">Seleccione...</option>
+                    <option value="Ninguno">Ninguno</option>
+                    <option value="Educación Parvulario">Educación Parvulario</option>
+                    <option value="Educación básica">Educación básica</option>
+                    <option value="Educación media humanista">Educación media humanista</option>
+                    <option value="Educación media técnico profesional">Educación media técnico profesional</option>
+                    <option value="Formación técnica incompleta">Formación técnica incompleta</option>
+                    <option value="Instituto profesional incompleto">Instituto profesional incompleto</option>
+                    <option value="Instituto profesional completo">Instituto profesional completo</option>
+                    <option value="Educación universitaria incompleta">Educación universitaria incompleta</option>
+                    <option value="Educación universitaria completa">Educación universitaria completa</option>
+                    <option value="Postgrado">Postgrado</option>
+                </select>
+                <x-jet-input-error for="nivel_instruccion" class="mt-2" />
+            </div>
+            <div class="col-span-6 sm:col-span-6">
+                <x-jet-label for="pais_origen" value="{{ __('País de origen') }}" />
+                <select required wire:model.defer="pais_origen_paren" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                    <option value="">Seleccione...</option>
+                    <option value="Venezuela">Venezuela</option>
+                    <option value="Cuba">Cuba</option>
+                    <option value="Chile">Chile</option>
+                    <option value="Perú">Perú</option>
+                    <option value="Ecuador">Ecuador</option>
+                    <option value="Argentina">Argentina</option>
+                    <option value="Haití">Haití</option>
+                    <option value="Brasil">Brasil</option>
+                    <option value="Uruguay">Uruguay</option>
+                    <option value="Otro">Otro</option>
+                </select>
+                <x-jet-input-error for="pais_origen" class="mt-2" />
+            </div>
+            <div class="col-span-6 sm:col-span-6 mb-2">
+                <x-jet-label value="{{ __('Parentesco') }}" />
+                    <select required wire:model="parentesco" class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                        <option value="">Seleccione...</option>
+                        <option value="Conyugue o Pareja">Conyugue o Pareja</option>
+                        <option value="Hijo de ambos">Hijo de ambos</option>
+                        <option value="Hijo del conyugue">Hijo del conyugue</option>
+                        <option value="Padre o Madre">Padre o Madre</option>
+                        <option value="Suegro o Suegra">Suegro o Suegra</option>
+                        <option value="Yerno o Nuera">Yerno o Nuera</option>
+                        <option value="Cuñado o Cuñada">Cuñado o Cuñada</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                <x-jet-input-error for="parentesco" class="mt-2" />
+            </div>
+        </x-slot>
+    
+        <x-slot name="footer">
+            <x-jet-secondary-button wire:click="$toggle('crearParentescoModal')" wire:loading.attr="agregarParentescoForm">
+                {{ __('Cerrar') }}
+            </x-jet-secondary-button>
+    
+            <x-jet-button class="ml-2 bg-green-500" type="submit" wire:loading.attr="agregarParentescoForm">
                 {{ __('Agregar Parentesco') }}
             </x-jet-button>
         </form>

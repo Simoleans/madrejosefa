@@ -57,7 +57,7 @@
                 @forelse($persona->parentescos as $pa)
                 <div>
                     <p class="font-medium text-lg mb-4 underline ">{{ $pa->parentesco }}</p>
-                    <p class="text-md font-bold">{{ $pa->user->nombres }} | {{ $pa->user->nro_documento ?? 'N/T' }}</p>
+                    <p class="text-md font-bold">{{ $pa->nombres }}</p>
                 </div>
                 @empty
                     <h2>N/T</h2>
@@ -107,6 +107,12 @@
                     <h2>N/T</h2>
                 @endforelse
             </div>
+            @auth
+                <div class="flex flex-col justify-center items-center mt-4">
+                    <img src="{{ asset('storage/'.auth()->user()->firma) }}" class="h-16 w-18" alt="{{ auth()->user()->name }}">
+                    <p class="text-md font-medium">Firma</p>
+                </div>
+            @endauth
         </div>
     </main>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

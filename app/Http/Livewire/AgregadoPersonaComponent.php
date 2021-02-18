@@ -33,11 +33,14 @@ class AgregadoPersonaComponent extends Component
     public $foto,$nombre,$descripcion,$fecha_exp;
 
     public $situacion_morbida,$situacion_profesional,$situacion_social;
+
+    public $nombres_paren,$apellido_materno_paren,$apellido_paterno_paren,$nro_documento_paren,$direccion_paren,$estado_civil_paren,$fecha_nac_paren,$nivel_instruccion_paren,$pais_origen_paren,$tipo_documento_paren;
     
     public function mount(Personas $id)
     {
         $this->persona = $id;
         $this->parentescos = $id->parentescos;
+        // dd($this->parentescos);
     }
 
     public function render()
@@ -103,8 +106,18 @@ class AgregadoPersonaComponent extends Component
     {
         Parentesco::create([
             'persona_id' => $this->persona->id,
-            'user_id' => $this->user,
             'parentesco' => $this->parentesco,
+            'nombres' => $this->nombres_paren,
+            'apellido_materno' => $this->apellido_materno_paren,
+            'apellido_paterno' => $this->apellido_paterno_paren,
+            'direccion' => $this->direccion_paren,
+            'estado_civil' => $this->estado_civil_paren,
+            'fecha_nac' => $this->fecha_nac_paren,
+            'nivel_instruccion' => $this->nivel_instruccion_paren,
+            'pais_origen' => $this->pais_origen_paren,
+            'nro_documento' => $this->nro_documento_paren,
+            'tipo_documento' => $this->tipo_documento_paren,
+
         ]);
 
         flash()->overlay('Has agregado el parentesco correctamente', 'Agregar Parentesco');
